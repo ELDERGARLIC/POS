@@ -7,7 +7,10 @@ class UnderConst extends StatelessWidget {
       backgroundColor: Colors.red.shade300,
       body: SafeArea(
         child: Container(
-          child: Text("NOT READY!", style: TextStyle(fontSize: 50),),
+          child: Text(
+            "\n\nTHE PAGE IS NOT READY READY!\n\n -OR- \n\nAN ERROR OCCURED!",
+            style: TextStyle(fontSize: 50),
+          ),
         ),
       ),
     );

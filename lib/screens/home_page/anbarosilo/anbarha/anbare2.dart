@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:corpapp/utilities/global.dart';
 
 class Anbare2 extends StatefulWidget {
   @override
@@ -11,70 +11,12 @@ class _Anbare2State extends State<Anbare2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xFF61A4F1),
-        child: Stack(
-          children: [
-            Icon(Icons.mail),
-            Positioned(
-              right: -0,
-              top: -0,
-              child: Container(
-                width: 12,
-                height: 12,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: Colors.red,
-                ),
-                child: Center(
-                  child: Text(
-                    '1',
-                    style: TextStyle(fontSize: 8),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      floatingActionButton: returnFloatingActionButton(context),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Color(0xFF73AEF5),
       ),
-      endDrawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              child: Image.asset('assets/logos/pos.png'),
-              decoration: BoxDecoration(
-                color: Color(0xFF61A4F1),
-              ),
-            ),
-            ListTile(
-              title: Text(
-                'ارتباط با ما',
-                textDirection: TextDirection.rtl,
-              ),
-              onTap: () {
-                launch(
-                    'https://docs.flutter.io/flutter/services/UrlLauncher-class.html');
-              },
-            ),
-            ListTile(
-              title: Text(
-                'پیغام ها',
-                textDirection: TextDirection.rtl,
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                launch('http://pos.co.ir/');
-              },
-            ),
-          ],
-        ),
-      ),
+      endDrawer: returnDrawer(context),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(

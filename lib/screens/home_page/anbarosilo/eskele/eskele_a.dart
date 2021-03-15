@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:corpapp/utilities/global.dart';
 
 class EskeleA extends StatefulWidget {
   @override
@@ -12,70 +12,12 @@ class _EskeleAState extends State<EskeleA> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xFF61A4F1),
-        child: Stack(
-          children: [
-            Icon(Icons.mail),
-            Positioned(
-              right: -0,
-              top: -0,
-              child: Container(
-                width: 12,
-                height: 12,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: Colors.red,
-                ),
-                child: Center(
-                  child: Text(
-                    '1',
-                    style: TextStyle(fontSize: 8),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      floatingActionButton: returnFloatingActionButton(context),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Color(0xFF73AEF5),
+        backgroundColor: Colors.indigo.shade400,
       ),
-      endDrawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              child: Image.asset('assets/logos/pos.png'),
-              decoration: BoxDecoration(
-                color: Color(0xFF61A4F1),
-              ),
-            ),
-            ListTile(
-              title: Text(
-                'ارتباط با ما',
-                textDirection: TextDirection.rtl,
-              ),
-              onTap: () {
-                launch(
-                    'https://docs.flutter.io/flutter/services/UrlLauncher-class.html');
-              },
-            ),
-            ListTile(
-              title: Text(
-                'پیغام ها',
-                textDirection: TextDirection.rtl,
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                launch('http://pos.co.ir/');
-              },
-            ),
-          ],
-        ),
-      ),
+      endDrawer: returnDrawer(context),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(
@@ -90,10 +32,10 @@ class _EskeleAState extends State<EskeleA> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Color(0xFF73AEF5),
-                      Color(0xFF61A4F1),
-                      Color(0xFF478DE0),
-                      Color(0xFF398AE5),
+                      Colors.indigo.shade400,
+                      Colors.indigo.shade300,
+                      Colors.indigo.shade200,
+                      Colors.indigo.shade100,
                     ],
                     stops: [0.1, 0.4, 0.7, 0.9],
                   ),
@@ -121,473 +63,375 @@ class _EskeleAState extends State<EskeleA> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 5.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(30),
+                        child: Column(children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Table(
+                              defaultVerticalAlignment:
+                                  TableCellVerticalAlignment.middle,
+                              children: [
+                                TableRow(children: [
+                                  Text(
+                                    "A1",
+                                    textScaleFactor: 1.5,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "A2",
+                                    textScaleFactor: 1.5,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "A3",
+                                    textScaleFactor: 1.5,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ]),
+                              ],
+                            ),
                           ),
-                          child: Column(children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Table(
-                                defaultVerticalAlignment:
-                                    TableCellVerticalAlignment.middle,
-                                children: [
-                                  TableRow(children: [
-                                    Text(
-                                      "A1",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "A2",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "A3",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ]),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Table(
-                                textDirection: TextDirection.rtl,
-                                defaultVerticalAlignment:
-                                    TableCellVerticalAlignment.middle,
-                                border: TableBorder.all(
-                                  width: 1.0,
-                                  color: Colors.grey.shade400,
+                          CustomizedTable(
+                            items: [
+                              TableRow(children: [
+                                Text(
+                                  "20",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
                                 ),
-                                children: [
-                                  TableRow(children: [
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ]),
-                                  TableRow(children: [
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ]),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Table(
-                                textDirection: TextDirection.rtl,
-                                defaultVerticalAlignment:
-                                    TableCellVerticalAlignment.middle,
-                                border: TableBorder.all(
-                                  width: 1.0,
-                                  color: Colors.grey.shade400,
+                                Text(
+                                  "20",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
                                 ),
-                                children: [
-                                  TableRow(children: [
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ]),
-                                  TableRow(children: [
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ]),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Table(
-                                textDirection: TextDirection.rtl,
-                                defaultVerticalAlignment:
-                                    TableCellVerticalAlignment.middle,
-                                border: TableBorder.all(
-                                  width: 1.0,
-                                  color: Colors.grey.shade400,
+                                Text(
+                                  "20",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
                                 ),
+                              ]),
+                              TableRow(
                                 children: [
-                                  TableRow(children: [
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ]),
-                                  TableRow(children: [
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ]),
+                                  Text(
+                                    "20",
+                                    textScaleFactor: 1.5,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "20",
+                                    textScaleFactor: 1.5,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "20",
+                                    textScaleFactor: 1.5,
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ],
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Table(
-                                textDirection: TextDirection.rtl,
-                                defaultVerticalAlignment:
-                                    TableCellVerticalAlignment.middle,
-                                border: TableBorder.all(
-                                  width: 1.0,
-                                  color: Colors.grey.shade400,
+                            ],
+                          ),
+                          CustomizedTable(
+                            items: [
+                              TableRow(
+                                children: [
+                                  Text(
+                                    "20",
+                                    textScaleFactor: 1.5,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "20",
+                                    textScaleFactor: 1.5,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "20",
+                                    textScaleFactor: 1.5,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                              TableRow(
+                                children: [
+                                  Text(
+                                    "20",
+                                    textScaleFactor: 1.5,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "20",
+                                    textScaleFactor: 1.5,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "20",
+                                    textScaleFactor: 1.5,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          CustomizedTable(
+                            items: [
+                              TableRow(children: [
+                                Text(
+                                  "20",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
                                 ),
-                                children: [
-                                  TableRow(children: [
-                                    Text(
-                                      "40",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "40",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "40",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ]),
-                                  TableRow(children: [
-                                    Text(
-                                      "40",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "40",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "40",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ]),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Table(
-                                textDirection: TextDirection.rtl,
-                                defaultVerticalAlignment:
-                                    TableCellVerticalAlignment.middle,
-                                border: TableBorder.all(
-                                  width: 1.0,
-                                  color: Colors.grey.shade400,
+                                Text(
+                                  "20",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
                                 ),
-                                children: [
-                                  TableRow(children: [
-                                    Text(
-                                      "40",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "40",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "40",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ]),
-                                  TableRow(children: [
-                                    Text(
-                                      "40",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "40",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "40",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ]),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Table(
-                                textDirection: TextDirection.rtl,
-                                defaultVerticalAlignment:
-                                    TableCellVerticalAlignment.middle,
-                                border: TableBorder.all(
-                                  width: 1.0,
-                                  color: Colors.grey.shade400,
+                                Text(
+                                  "20",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
                                 ),
+                              ]),
+                              TableRow(
                                 children: [
-                                  TableRow(children: [
-                                    Text(
-                                      "45",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "45",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "45",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ]),
+                                  Text(
+                                    "20",
+                                    textScaleFactor: 1.5,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "20",
+                                    textScaleFactor: 1.5,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "20",
+                                    textScaleFactor: 1.5,
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ],
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Table(
-                                textDirection: TextDirection.rtl,
-                                defaultVerticalAlignment:
-                                    TableCellVerticalAlignment.middle,
-                                border: TableBorder.all(
-                                  width: 1.0,
-                                  color: Colors.grey.shade400,
+                            ],
+                          ),
+                          CustomizedTable(
+                            items: [
+                              TableRow(children: [
+                                Text(
+                                  "40",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
                                 ),
-                                children: [
-                                  TableRow(children: [
-                                    Text(
-                                      "45",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "45",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "45",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ]),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Table(
-                                textDirection: TextDirection.rtl,
-                                defaultVerticalAlignment:
-                                    TableCellVerticalAlignment.middle,
-                                border: TableBorder.all(
-                                  width: 1.0,
-                                  color: Colors.grey.shade400,
+                                Text(
+                                  "40",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
                                 ),
-                                children: [
-                                  TableRow(children: [
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ]),
-                                  TableRow(children: [
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "20",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ]),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Table(
-                                textDirection: TextDirection.rtl,
-                                defaultVerticalAlignment:
-                                    TableCellVerticalAlignment.middle,
-                                border: TableBorder.all(
-                                  width: 1.0,
-                                  color: Colors.grey.shade400,
+                                Text(
+                                  "40",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
                                 ),
-                                children: [
-                                  TableRow(children: [
-                                    Text(
-                                      "40",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "40",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "40",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ]),
-                                  TableRow(children: [
-                                    Text(
-                                      "40",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "40",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "40",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ]),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Table(
-                                textDirection: TextDirection.rtl,
-                                defaultVerticalAlignment:
-                                    TableCellVerticalAlignment.middle,
-                                border: TableBorder.all(
-                                  width: 1.0,
-                                  color: Colors.grey.shade400,
+                              ]),
+                              TableRow(children: [
+                                Text(
+                                  "40",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
                                 ),
-                                children: [
-                                  TableRow(children: [
-                                    Text(
-                                      "45",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "45",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "45",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ]),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                              height: 10,
-                            ),
-                          ]),
-                        ),
+                                Text(
+                                  "40",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "40",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ]),
+                            ],
+                          ),
+                          CustomizedTable(
+                            items: [
+                              TableRow(children: [
+                                Text(
+                                  "40",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "40",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "40",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ]),
+                              TableRow(children: [
+                                Text(
+                                  "40",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "40",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "40",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ]),
+                            ],
+                          ),
+                          CustomizedTable(
+                            items: [
+                              TableRow(children: [
+                                Text(
+                                  "45",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "45",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "45",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ]),
+                            ],
+                          ),
+                          CustomizedTable(
+                            items: [
+                              TableRow(children: [
+                                Text(
+                                  "45",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "45",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "45",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ]),
+                            ],
+                          ),
+                          CustomizedTable(
+                            items: [
+                              TableRow(children: [
+                                Text(
+                                  "20",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "20",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "20",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ]),
+                              TableRow(children: [
+                                Text(
+                                  "20",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "20",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "20",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ]),
+                            ],
+                          ),
+                          CustomizedTable(
+                            items: [
+                              TableRow(children: [
+                                Text(
+                                  "40",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "40",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "40",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ]),
+                              TableRow(children: [
+                                Text(
+                                  "40",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "40",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "40",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ]),
+                            ],
+                          ),
+                          CustomizedTable(
+                            items: [
+                              TableRow(children: [
+                                Text(
+                                  "45",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "45",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "45",
+                                  textScaleFactor: 1.5,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ]),
+                            ],
+                          ),
+                          SizedBox(
+                            width: 10,
+                            height: 10,
+                          ),
+                        ]),
                       ),
                       SizedBox(
                         height: 10,
@@ -600,6 +444,48 @@ class _EskeleAState extends State<EskeleA> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class CustomizedTable extends StatelessWidget {
+  CustomizedTable({@required this.items});
+
+  final List<TableRow> items;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 10,
+        ),
+        Material(
+          elevation: 20,
+          borderRadius: BorderRadius.circular(10),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Table(
+                textDirection: TextDirection.rtl,
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                border: TableBorder(
+                  horizontalInside: BorderSide(
+                    width: 1,
+                    color: Colors.grey,
+                    style: BorderStyle.solid,
+                  ),
+                ),
+                children: items,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

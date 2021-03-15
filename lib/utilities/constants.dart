@@ -22,3 +22,15 @@ final kBoxDecorationStyle = BoxDecoration(
     ),
   ],
 );
+
+final kBoxDecorationStyleEdited = BoxDecoration(
+  color: Colors.indigo.shade300,
+  borderRadius: BorderRadius.circular(5.0),
+  boxShadow: [
+    BoxShadow(
+      color: Colors.black12,
+      blurRadius: 6.0,
+      offset: Offset(0, 2),
+    ),
+  ],
+);

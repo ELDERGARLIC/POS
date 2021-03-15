@@ -26,6 +26,10 @@ dependencies:
 
   cupertino_icons: ^0.1.2
   url_launcher: ^5.7.10
+  http: ^0.12.2
+  crypto: ^2.1.5
+  flutter_spinkit: ^3.1.0
+  shared_preferences: ^0.5.12+4
 
 dev_dependencies:
   flutter_test:

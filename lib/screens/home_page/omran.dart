@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:corpapp/services/omran/omran_networking.dart';
 import 'package:corpapp/utilities/constants.dart';
-import 'package:corpapp/screens/messages.dart';
+import 'package:corpapp/utilities/global.dart';
 
 class Omran extends StatefulWidget {
-  Omran({@required this.uid});
-  final String uid;
-
   @override
   _OmranState createState() => _OmranState();
 }
@@ -16,68 +13,9 @@ class _OmranState extends State<Omran> {
   bool _tajihizatiCheck = false;
   bool _abniyeCheck = false;
   bool _tasisatiCheck = false;
+  String mored = "";
   TextEditingController darkhastController = new TextEditingController();
   TextEditingController pishnehadController = new TextEditingController();
-
-  void _message() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return Dialog(
-          child: new Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              new CircularProgressIndicator(
-                strokeWidth: 1,
-              ),
-              new Text("Loading"),
-            ],
-          ),
-        );
-      },
-    );
-    new Future.delayed(
-      new Duration(seconds: 1),
-      () {
-        Navigator.pop(context); //pop dialog
-      },
-    );
-    new Future.delayed(
-      new Duration(seconds: 1),
-      () {
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            return Dialog(
-              child: new Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  new Text(
-                    "DONE!!",
-                    style: TextStyle(color: Colors.green),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-        new Future.delayed(
-          new Duration(seconds: 1),
-          () {
-            Navigator.pop(context); //pop dialog
-          },
-        );
-        new Future.delayed(
-          new Duration(seconds: 1),
-          () {
-            Navigator.pop(context); //pop dialog
-          },
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,108 +24,8 @@ class _OmranState extends State<Omran> {
         elevation: 0,
         backgroundColor: Color(0xFF73AEF5),
       ),
-      endDrawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              child: Image.asset('assets/logos/pos.png'),
-              decoration: BoxDecoration(
-                color: Color(0xFF61A4F1),
-              ),
-            ),
-            ListTile(
-              title: Text(
-                'ارتباط با ما',
-                textDirection: TextDirection.rtl,
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                launch('http://pos.co.ir/');
-              },
-            ),
-            ListTile(
-              title: Text(
-                'پیغام ها',
-                textDirection: TextDirection.rtl,
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                launch('http://pos.co.ir/');
-              },
-            ),
-            ListTile(
-              title: Text(
-                'خروج',
-                textDirection: TextDirection.rtl,
-              ),
-              onTap: () {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    return Dialog(
-                      child: new Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          new CircularProgressIndicator(
-                            strokeWidth: 1,
-                          ),
-                          new Text("Loading"),
-                        ],
-                      ),
-                    );
-                  },
-                );
-                new Future.delayed(
-                  new Duration(seconds: 3),
-                  () {
-                    Navigator.pop(context); //pop dialog
-                    Navigator.pushNamed(context, '/login');
-                  },
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Messages(
-                uid: widget.uid,
-              ),
-            ),
-          );
-        },
-        backgroundColor: Color(0xFF61A4F1),
-        child: Stack(
-          children: [
-            Icon(Icons.mail),
-            Positioned(
-              right: -0,
-              top: -0,
-              child: Container(
-                width: 12,
-                height: 12,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: Colors.red,
-                ),
-                child: Center(
-                  child: Text(
-                    '1',
-                    style: TextStyle(fontSize: 8),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      endDrawer: returnDrawer(context),
+      floatingActionButton: returnFloatingActionButton(context),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(
@@ -262,7 +100,12 @@ class _OmranState extends State<Omran> {
                                             setState(
                                               () {
                                                 _tajihizatiCheck = value;
-                                                print(_tajihizatiCheck);
+                                                if (value == true) {
+                                                  _tasisatiCheck = false;
+                                                  _abniyeCheck = false;
+                                                  mored = "تجهیزاتی";
+                                                }
+                                                print(mored);
                                               },
                                             );
                                           },
@@ -277,7 +120,12 @@ class _OmranState extends State<Omran> {
                                             setState(
                                               () {
                                                 _tasisatiCheck = value;
-                                                print(_tasisatiCheck);
+                                                if (value == true) {
+                                                  _tajihizatiCheck = false;
+                                                  _abniyeCheck = false;
+                                                  mored = "تاسیساتی";
+                                                }
+                                                print(mored);
                                               },
                                             );
                                           },
@@ -294,7 +142,12 @@ class _OmranState extends State<Omran> {
                                         setState(
                                           () {
                                             _abniyeCheck = value;
-                                            print(_abniyeCheck);
+                                            if (value == true) {
+                                              _tajihizatiCheck = false;
+                                              _tasisatiCheck = false;
+                                              mored = "ابنیه و ساختمانی";
+                                            }
+                                            print(mored);
                                           },
                                         );
                                       },
@@ -395,7 +248,18 @@ class _OmranState extends State<Omran> {
                                     ),
                                     child: RaisedButton(
                                       elevation: 5.0,
-                                      onPressed: _message,
+                                      onPressed: () async {
+                                        dynamic data = await getOmranData(
+                                          context,
+                                          mored, // bools
+                                          '${loggedUser.fName} ${loggedUser.lName}', // fName, lName
+                                          darkhastController
+                                              .text, // firstTextBox
+                                          pishnehadController
+                                              .text, // secondTextBox
+                                        );
+                                        print(data);
+                                      },
                                       padding: EdgeInsets.all(15.0),
                                       shape: RoundedRectangleBorder(
                                         borderRadius:

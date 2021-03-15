@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:corpapp/utilities/global.dart';
 
 class MohtaviyateSiloha extends StatefulWidget {
   @override
@@ -11,70 +11,12 @@ class _MohtaviyateSilohaState extends State<MohtaviyateSiloha> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xFF61A4F1),
-        child: Stack(
-          children: [
-            Icon(Icons.mail),
-            Positioned(
-              right: -0,
-              top: -0,
-              child: Container(
-                width: 12,
-                height: 12,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: Colors.red,
-                ),
-                child: Center(
-                  child: Text(
-                    '1',
-                    style: TextStyle(fontSize: 8),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      floatingActionButton: returnFloatingActionButton(context),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Color(0xFF73AEF5),
       ),
-      endDrawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              child: Image.asset('assets/logos/pos.png'),
-              decoration: BoxDecoration(
-                color: Color(0xFF61A4F1),
-              ),
-            ),
-            ListTile(
-              title: Text(
-                'ارتباط با ما',
-                textDirection: TextDirection.rtl,
-              ),
-              onTap: () {
-                launch(
-                    'https://docs.flutter.io/flutter/services/UrlLauncher-class.html');
-              },
-            ),
-            ListTile(
-              title: Text(
-                'پیغام ها',
-                textDirection: TextDirection.rtl,
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                launch('http://pos.co.ir/');
-              },
-            ),
-          ],
-        ),
-      ),
+      endDrawer: returnDrawer(context),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(
@@ -130,80 +72,84 @@ class _MohtaviyateSilohaState extends State<MohtaviyateSiloha> {
                                   mohtaviyat: 'ایتم',
                                   color: Colors.white,
                                   vazn: 'کیلو',
+                                  shomare: '1',
                                 ),
                                 StorageContainer(
                                   icon: 'assets/logos/anbarlist.png',
                                   mohtaviyat: 'ایتم',
                                   color: Colors.white,
                                   vazn: 'کیلو',
+                                  shomare: '2',
                                 ),
                                 StorageContainer(
                                   icon: 'assets/logos/anbarlist.png',
                                   mohtaviyat: 'ایتم',
                                   color: Colors.white,
                                   vazn: 'کیلو',
+                                  shomare: '3',
                                 ),
                                 StorageContainer(
                                   icon: 'assets/logos/anbarlist.png',
                                   mohtaviyat: 'ایتم',
                                   color: Colors.white,
                                   vazn: 'کیلو',
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                StorageContainer(
-                                  icon: 'assets/logos/anbarlist.png',
-                                  mohtaviyat: 'ایتم',
-                                  color: Colors.white,
-                                  vazn: 'کیلو',
+                                  shomare: '4',
                                 ),
                                 StorageContainer(
                                   icon: 'assets/logos/anbarlist.png',
                                   mohtaviyat: 'ایتم',
                                   color: Colors.white,
                                   vazn: 'کیلو',
+                                  shomare: '5',
                                 ),
                                 StorageContainer(
                                   icon: 'assets/logos/anbarlist.png',
                                   mohtaviyat: 'ایتم',
                                   color: Colors.white,
                                   vazn: 'کیلو',
+                                  shomare: '6',
                                 ),
                                 StorageContainer(
                                   icon: 'assets/logos/anbarlist.png',
                                   mohtaviyat: 'ایتم',
                                   color: Colors.white,
                                   vazn: 'کیلو',
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                StorageContainer(
-                                  icon: 'assets/logos/anbarlist.png',
-                                  mohtaviyat: 'ایتم',
-                                  color: Colors.white,
-                                  vazn: 'کیلو',
+                                  shomare: '7',
                                 ),
                                 StorageContainer(
                                   icon: 'assets/logos/anbarlist.png',
                                   mohtaviyat: 'ایتم',
                                   color: Colors.white,
                                   vazn: 'کیلو',
+                                  shomare: '8',
                                 ),
                                 StorageContainer(
                                   icon: 'assets/logos/anbarlist.png',
                                   mohtaviyat: 'ایتم',
                                   color: Colors.white,
                                   vazn: 'کیلو',
+                                  shomare: '9',
                                 ),
                                 StorageContainer(
                                   icon: 'assets/logos/anbarlist.png',
                                   mohtaviyat: 'ایتم',
                                   color: Colors.white,
                                   vazn: 'کیلو',
+                                  shomare: '10',
+                                ),
+                                StorageContainer(
+                                  icon: 'assets/logos/anbarlist.png',
+                                  mohtaviyat: 'ایتم',
+                                  color: Colors.white,
+                                  vazn: 'کیلو',
+                                  shomare: '11',
+                                ),
+                                StorageContainer(
+                                  icon: 'assets/logos/anbarlist.png',
+                                  mohtaviyat: 'ایتم',
+                                  color: Colors.white,
+                                  vazn: 'کیلو',
+                                  shomare: '12',
                                 ),
                               ],
                             ),
@@ -227,12 +173,14 @@ class StorageContainer extends StatelessWidget {
       {@required this.color,
       @required this.mohtaviyat,
       @required this.icon,
-      @required this.vazn});
+      @required this.vazn,
+      @required this.shomare});
 
   final Color color;
   final String mohtaviyat;
   final String icon;
   final String vazn;
+  final String shomare;
 
   @override
   Widget build(BuildContext context) {
@@ -240,8 +188,8 @@ class StorageContainer extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 8.0),
-        width: 100.0,
-        height: 150.0,
+        width: 300.0,
+        height: 170.0,
         child: RaisedButton(
           elevation: 5.0,
           onPressed: () {
@@ -265,6 +213,18 @@ class StorageContainer extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Text(
+                      "کندو: $shomare",
+                      textAlign: TextAlign.center,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                        color: Color(0xFF527DAA),
+                        letterSpacing: 1.0,
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'OpenSans',
+                      ),
+                    ),
                     Text(
                       "محتویات: $mohtaviyat",
                       textAlign: TextAlign.center,

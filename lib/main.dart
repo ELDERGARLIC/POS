@@ -29,6 +29,10 @@ import 'screens/home_page/anbarosilo/siloha/mohtaviyatesilo.dart';
 
 import 'screens/home_page/omran.dart';
 
+import 'screens/liste_darkhast/liste_darkhast_page.dart';
+
+import 'screens/testapi.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -61,6 +65,8 @@ class MyApp extends StatelessWidget {
         '/anbare4': (context) => Anbare4(),
         '/mohtaviyatesiloha': (context) => MohtaviyateSiloha(),
         '/omran': (context) => Omran(),
+        '/listeDarkhast': (context) => ListeDarkhastPage(),
+        '/test': (context) => TestAPI(),
       },
     );
   }
