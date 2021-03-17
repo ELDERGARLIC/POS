@@ -6,7 +6,7 @@ import 'dart:async';
 class NetworkHelper {
   Future doExit() async {
     final http.Response response = await http.post(
-      'http://zfif.ir/POS/logout/',
+      'https://zfif.ir/POS/logout/',
       headers: {
         'Accept': 'application/json',
       },

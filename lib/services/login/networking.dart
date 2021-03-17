@@ -10,7 +10,7 @@ String generateMd5(String input) {
 class NetworkHelper {
   Future getData(String username, String password) async {
     final http.Response response = await http.post(
-      'http://zfif.ir/POS/login/',
+      'https://zfif.ir/POS/login/',
       headers: {
         'Accept': 'application/json',
       },

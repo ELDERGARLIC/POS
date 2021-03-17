@@ -177,6 +177,7 @@ class HomeButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 5.0),
         width: 110.0,
         height: 135.0,
+        // ignore: deprecated_member_use
         child: RaisedButton(
           elevation: 5.0,
           onPressed: () async {
@@ -191,7 +192,7 @@ class HomeButton extends StatelessWidget {
           },
           padding: EdgeInsets.all(15.0),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
+            borderRadius: BorderRadius.circular(5.0), //TODO: maybe change this!
           ),
           color: color,
           child: Column(

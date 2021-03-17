@@ -17,7 +17,7 @@ class NetworkHelper {
     var body = json.encode(data);
 
     final http.Response response = await http.post(
-      'http://zfif.ir/POS/DAO/',
+      'https://zfif.ir/POS/DAO/',
       headers: {},
       body: {
         "DAOREQ": body,

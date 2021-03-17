@@ -26,6 +26,7 @@ class _ListeDarkhastPageState extends State<ListeDarkhastPage> {
         dataMap: widget.listeDarkhast[i.toString()],
       ));
     }
+    listOfWidgets = listOfWidgets.reversed.toList();
     super.initState();
   }
 
