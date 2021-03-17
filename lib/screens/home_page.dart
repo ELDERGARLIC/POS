@@ -116,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                     children: <Widget>[
                       Center(
                         child: Text(
-                          'ssخانه',
+                          'خانه',
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'OpenSans',
