@@ -6,6 +6,8 @@ import 'screens/home_page/modiriyat.dart';
 import 'screens/login_screen.dart';
 import 'screens/under_const.dart';
 import 'screens/home_page/modiriyat/sokhan.dart';
+import 'screens/home_page/amaliyat.dart';
+import 'screens/home_page/ertebat_ba_modir.dart';
 import 'screens/splash.dart';
 
 import 'screens/home_page/anbarosilo.dart';
@@ -29,6 +31,8 @@ import 'screens/home_page/anbarosilo/siloha/mohtaviyatesilo.dart';
 
 import 'screens/home_page/omran.dart';
 import 'screens/home_page/profile.dart';
+import 'screens/home_page/tajhizati.dart';
+import 'screens/morekhasi.dart';
 
 import 'screens/liste_darkhast/liste_darkhast_page.dart';
 
@@ -40,8 +44,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Login UI',
-      debugShowCheckedModeBanner: false,
+      title: 'POS',
       initialRoute: '/splash',
       routes: {
         '/login': (context) => LoginScreen(),
@@ -68,6 +71,10 @@ class MyApp extends StatelessWidget {
         '/omran': (context) => Omran(),
         '/listeDarkhast': (context) => ListeDarkhastPage(),
         '/profile': (context) => Profile(),
+        '/morekhasi': (context) => Morekhasi(),
+        '/amaliyat': (context) => Amaliyat(),
+        '/ertebat': (context) => ErtebatBaModir(),
+        '/tajhizati': (context) => Tajhizati(),
         '/test': (context) => TestAPI(),
       },
     );

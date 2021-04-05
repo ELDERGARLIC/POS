@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:corpapp/services/omran/omran_networking.dart';
-import 'package:corpapp/utilities/constants.dart';
 import 'package:corpapp/utilities/global.dart';
 
 class Profile extends StatefulWidget {
@@ -25,7 +23,18 @@ class _ProfileState extends State<Profile> {
         backgroundColor: Color(0xFF73AEF5),
       ),
       endDrawer: returnDrawer(context),
-      floatingActionButton: returnFloatingActionButton(context),
+      floatingActionButton: Container(
+        width: 120,
+        child: FloatingActionButton(
+          backgroundColor: Color(0xFF61A4F1),
+          onPressed: () {
+            Navigator.pushNamed(context, '/morekhasi');
+          },
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10.0))),
+          child: Text("درخواست مرخصی  "),
+        ),
+      ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(
@@ -59,7 +68,7 @@ class _ProfileState extends State<Profile> {
                     children: <Widget>[
                       Center(
                         child: Text(
-                          'عمران',
+                          'پروفایل',
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'OpenSans',
@@ -73,6 +82,7 @@ class _ProfileState extends State<Profile> {
                           padding: const EdgeInsets.only(top: 5.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -80,195 +90,54 @@ class _ProfileState extends State<Profile> {
                                   Padding(
                                     padding: const EdgeInsets.only(right: 12.0),
                                     child: Text(
-                                      'مورد درخواست شده',
+                                      'مشخصات فردی',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: 'OpenSans',
                                         fontSize: 18.0,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.w700,
                                       ),
                                     ),
                                   ),
-                                  Row(
-                                    children: [
-                                      CustomCheckBox(
-                                        color: Colors.white,
-                                        title: "تجهیزاتی",
-                                        checkbox: Checkbox(
-                                          value: _tajihizatiCheck,
-                                          onChanged: (value) {
-                                            setState(
-                                              () {
-                                                _tajihizatiCheck = value;
-                                                if (value == true) {
-                                                  _tasisatiCheck = false;
-                                                  _abniyeCheck = false;
-                                                  mored = "تجهیزاتی";
-                                                }
-                                                print(mored);
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                      CustomCheckBox(
-                                        color: Colors.white,
-                                        title: "تاسیساتی",
-                                        checkbox: Checkbox(
-                                          value: _tasisatiCheck,
-                                          onChanged: (value) {
-                                            setState(
-                                              () {
-                                                _tasisatiCheck = value;
-                                                if (value == true) {
-                                                  _tajihizatiCheck = false;
-                                                  _abniyeCheck = false;
-                                                  mored = "تاسیساتی";
-                                                }
-                                                print(mored);
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  CustomCheckBox(
+                                  ProfileBox(
                                     color: Colors.white,
-                                    title: "ابنیه و ساختمانی",
-                                    checkbox: Checkbox(
-                                      value: _abniyeCheck,
-                                      onChanged: (value) {
-                                        setState(
-                                          () {
-                                            _abniyeCheck = value;
-                                            if (value == true) {
-                                              _tajihizatiCheck = false;
-                                              _tasisatiCheck = false;
-                                              mored = "ابنیه و ساختمانی";
-                                            }
-                                            print(mored);
-                                          },
-                                        );
-                                      },
-                                    ),
+                                    title: "نام:",
+                                    pWidth: MediaQuery.of(context).size.width,
+                                    data: loggedUser.fName,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 12.0, top: 25, bottom: 10),
-                                    child: Text(
-                                      'شرح درخواست',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'OpenSans',
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                                  ProfileBox(
+                                    color: Colors.white,
+                                    title: "نام خانوادگی:",
+                                    pWidth: MediaQuery.of(context).size.width,
+                                    data: loggedUser.lName,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 5.0),
-                                    child: Container(
-                                      width: 350,
-                                      alignment: Alignment.centerLeft,
-                                      decoration: kBoxDecorationStyle,
-                                      height: 60.0,
-                                      child: TextField(
-                                        controller: darkhastController,
-                                        textAlign: TextAlign.end,
-                                        keyboardType: TextInputType.text,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'OpenSans',
-                                        ),
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          contentPadding:
-                                              EdgeInsets.only(top: 14.0),
-                                          suffixIcon: Icon(
-                                            Icons.message,
-                                            color: Colors.white,
-                                            textDirection: TextDirection.rtl,
-                                          ),
-                                          hintText:
-                                              'لطفا درخواست خود را وارد کنید',
-                                          hintStyle: kHintTextStyle,
-                                        ),
-                                      ),
-                                    ),
+                                  ProfileBox(
+                                    color: Colors.white,
+                                    title: "شغل:",
+                                    pWidth: MediaQuery.of(context).size.width,
+                                    data: loggedUser.post,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 0.0, top: 25, bottom: 10),
-                                    child: Text(
-                                      'پیشنهاد واحد درخواست کننده',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'OpenSans',
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                                  ProfileBox(
+                                    color: Colors.white,
+                                    title: "کد ملی:",
+                                    pWidth: MediaQuery.of(context).size.width,
+                                    data: loggedUser.nationalId,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 5.0),
-                                    child: Container(
-                                      width: 350,
-                                      alignment: Alignment.centerLeft,
-                                      decoration: kBoxDecorationStyle,
-                                      height: 60.0,
-                                      child: TextField(
-                                        controller: pishnehadController,
-                                        textAlign: TextAlign.end,
-                                        keyboardType: TextInputType.text,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'OpenSans',
-                                        ),
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          contentPadding:
-                                              EdgeInsets.only(top: 14.0),
-                                          suffixIcon: Icon(
-                                            Icons.message,
-                                            color: Colors.white,
-                                            textDirection: TextDirection.rtl,
-                                          ),
-                                          hintText:
-                                              'لطفا پیشنهاد خود را وارد کنید',
-                                          hintStyle: kHintTextStyle,
-                                        ),
-                                      ),
-                                    ),
+                                  ProfileBox(
+                                    color: Colors.white,
+                                    title: "شماره همراه:",
+                                    pWidth: MediaQuery.of(context).size.width,
+                                    data: loggedUser.phone,
                                   ),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 135,
-                                      vertical: 20,
-                                    ),
-                                    child: RaisedButton(
-                                      elevation: 5.0,
-                                      onPressed: () async {
-                                        dynamic data = await getOmranData(
-                                          context,
-                                          mored, // bools
-                                          '${loggedUser.fName} ${loggedUser.lName}', // fName, lName
-                                          darkhastController
-                                              .text, // firstTextBox
-                                          pishnehadController
-                                              .text, // secondTextBox
-                                        );
-                                        print(data);
-                                      },
-                                      padding: EdgeInsets.all(15.0),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30.0),
-                                      ),
-                                      color: Colors.white,
-                                      child: Icon(Icons.send),
-                                    ),
+                                  ProfileBox(
+                                    color: Colors.white,
+                                    title: "کد پرسنلی:",
+                                    pWidth: MediaQuery.of(context).size.width,
+                                    data: loggedUser.personalCode,
                                   ),
+                                  SizedBox(
+                                    height: 150,
+                                  )
                                 ],
                               ),
                             ],
@@ -287,49 +156,56 @@ class _ProfileState extends State<Profile> {
   }
 }
 
-class CustomCheckBox extends StatelessWidget {
-  CustomCheckBox({
+class ProfileBox extends StatelessWidget {
+  ProfileBox({
     @required this.color,
     @required this.title,
-    @required this.checkbox,
+    @required this.data,
+    @required this.pWidth,
   });
 
   final Color color;
   final String title;
-  final Checkbox checkbox;
+  final String data;
+  final double pWidth;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 8.0),
-        width: 160.0,
+        padding: EdgeInsets.symmetric(vertical: 5.0),
+        width: pWidth - 30,
         height: 65.0,
         child: RaisedButton(
           elevation: 5.0,
           onPressed: () {},
           padding: EdgeInsets.all(15.0),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
+            borderRadius: BorderRadius.circular(5.0),
           ),
           color: color,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                title,
+                "$title $data",
                 textAlign: TextAlign.center,
                 textDirection: TextDirection.rtl,
                 style: TextStyle(
                   color: Color(0xFF527DAA),
                   letterSpacing: 1.5,
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w600,
                   fontFamily: 'OpenSans',
                 ),
               ),
-              checkbox,
+              /*
+              Container(
+                margin: EdgeInsets.only(left: 5),
+                child: Image.asset('assets/logos/profile.png'), //TODO: MAKE IT MORE BEAUTIFUL!
+              ),
+              */
             ],
           ),
         ),

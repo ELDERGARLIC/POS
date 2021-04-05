@@ -144,7 +144,8 @@ class HomeButton extends StatelessWidget {
           },
           padding: EdgeInsets.all(15.0),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
+            borderRadius:
+                BorderRadius.circular(15.0), //TODO: maybe change this!
           ),
           color: color,
           child: Column(

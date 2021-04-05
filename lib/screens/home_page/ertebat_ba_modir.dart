@@ -4,12 +4,12 @@ import 'package:corpapp/services/omran/omran_networking.dart';
 import 'package:corpapp/utilities/constants.dart';
 import 'package:corpapp/utilities/global.dart';
 
-class Omran extends StatefulWidget {
+class ErtebatBaModir extends StatefulWidget {
   @override
-  _OmranState createState() => _OmranState();
+  _ErtebatBaModirState createState() => _ErtebatBaModirState();
 }
 
-class _OmranState extends State<Omran> {
+class _ErtebatBaModirState extends State<ErtebatBaModir> {
   bool _tajihizatiCheck = false;
   bool _abniyeCheck = false;
   bool _tasisatiCheck = false;
@@ -59,7 +59,7 @@ class _OmranState extends State<Omran> {
                     children: <Widget>[
                       Center(
                         child: Text(
-                          'عمران',
+                          'ارسال پیام به مدیریت',
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'OpenSans',
@@ -78,86 +78,10 @@ class _OmranState extends State<Omran> {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(right: 12.0),
-                                    child: Text(
-                                      'مورد درخواست شده',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'OpenSans',
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      CustomCheckBox(
-                                        color: Colors.white,
-                                        title: "تجهیزاتی",
-                                        checkbox: Checkbox(
-                                          value: _tajihizatiCheck,
-                                          onChanged: (value) {
-                                            setState(
-                                              () {
-                                                _tajihizatiCheck = value;
-                                                if (value == true) {
-                                                  _tasisatiCheck = false;
-                                                  _abniyeCheck = false;
-                                                  mored = "تجهیزاتی";
-                                                }
-                                                print(mored);
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                      CustomCheckBox(
-                                        color: Colors.white,
-                                        title: "تاسیساتی",
-                                        checkbox: Checkbox(
-                                          value: _tasisatiCheck,
-                                          onChanged: (value) {
-                                            setState(
-                                              () {
-                                                _tasisatiCheck = value;
-                                                if (value == true) {
-                                                  _tajihizatiCheck = false;
-                                                  _abniyeCheck = false;
-                                                  mored = "تاسیساتی";
-                                                }
-                                                print(mored);
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  CustomCheckBox(
-                                    color: Colors.white,
-                                    title: "ابنیه و ساختمانی",
-                                    checkbox: Checkbox(
-                                      value: _abniyeCheck,
-                                      onChanged: (value) {
-                                        setState(
-                                          () {
-                                            _abniyeCheck = value;
-                                            if (value == true) {
-                                              _tajihizatiCheck = false;
-                                              _tasisatiCheck = false;
-                                              mored = "ابنیه و ساختمانی";
-                                            }
-                                            print(mored);
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  Padding(
                                     padding: const EdgeInsets.only(
                                         right: 12.0, top: 25, bottom: 10),
                                     child: Text(
-                                      'شرح درخواست',
+                                      'موضوع پیام',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: 'OpenSans',
@@ -191,7 +115,7 @@ class _OmranState extends State<Omran> {
                                             textDirection: TextDirection.rtl,
                                           ),
                                           hintText:
-                                              'لطفا درخواست خود را وارد کنید',
+                                              'لطفا موضوع پیام خود را وارد کنید',
                                           hintStyle: kHintTextStyle,
                                         ),
                                       ),
@@ -201,7 +125,7 @@ class _OmranState extends State<Omran> {
                                     padding: const EdgeInsets.only(
                                         right: 0.0, top: 25, bottom: 10),
                                     child: Text(
-                                      'پیشنهاد واحد درخواست کننده',
+                                      'متن پیام',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: 'OpenSans',
@@ -216,10 +140,13 @@ class _OmranState extends State<Omran> {
                                       width: 350,
                                       alignment: Alignment.centerLeft,
                                       decoration: kBoxDecorationStyle,
-                                      height: 60.0,
+                                      height: 300.0,
                                       child: TextField(
+                                        maxLines: 10000,
                                         controller: pishnehadController,
                                         textAlign: TextAlign.end,
+                                        textAlignVertical:
+                                            TextAlignVertical.top,
                                         keyboardType: TextInputType.text,
                                         style: TextStyle(
                                           color: Colors.white,
@@ -229,10 +156,20 @@ class _OmranState extends State<Omran> {
                                           border: InputBorder.none,
                                           contentPadding:
                                               EdgeInsets.only(top: 14.0),
-                                          suffixIcon: Icon(
-                                            Icons.message,
-                                            color: Colors.white,
-                                            textDirection: TextDirection.rtl,
+                                          suffixIcon: Container(
+                                            height: 272,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Icon(
+                                                  Icons.message,
+                                                  color: Colors.white,
+                                                  textDirection:
+                                                      TextDirection.rtl,
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                           hintText:
                                               'لطفا پیشنهاد خود را وارد کنید',
@@ -248,18 +185,25 @@ class _OmranState extends State<Omran> {
                                     ),
                                     child: RaisedButton(
                                       elevation: 5.0,
-                                      onPressed: () async {
-                                        dynamic data = await getOmranData(
-                                          context,
-                                          mored, // bools
-                                          '${loggedUser.fName} ${loggedUser.lName}', // fName, lName
-                                          darkhastController
-                                              .text, // firstTextBox
-                                          pishnehadController
-                                              .text, // secondTextBox
-                                        );
-                                        print(data);
-                                      },
+                                      onPressed: () async {},
+                                      padding: EdgeInsets.all(15.0),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0),
+                                      ),
+                                      color: Colors.white,
+                                      child: Icon(Icons.attach_file),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                      left: 135,
+                                      right: 135,
+                                      bottom: 10,
+                                    ),
+                                    child: RaisedButton(
+                                      elevation: 5.0,
+                                      onPressed: () async {},
                                       padding: EdgeInsets.all(15.0),
                                       shape: RoundedRectangleBorder(
                                         borderRadius:

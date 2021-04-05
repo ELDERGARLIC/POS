@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:corpapp/utilities/global.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:corpapp/screens/liste_darkhast/liste_darkhast_page.dart';
 import 'package:corpapp/services/liste_darkhast/liste_darkhast_networking.dart';
 
 final GlobalKey<State> _keyLoader = new GlobalKey<State>();

@@ -13,17 +13,17 @@ class _HomePageState extends State<HomePage> {
         icon: 'assets/logos/amoozesh.png',
         title: 'آموزش',
         color: Colors.white,
-        toWhere: '/under'),
+        toWhere: '/login'),
     HomeButton(
         icon: 'assets/logos/profile.png',
         title: 'پروفایل',
         color: Colors.white,
-        toWhere: '/under'),
+        toWhere: '/profile'),
     HomeButton(
-        icon: 'assets/logos/exit.png',
-        title: 'خروج',
+        icon: 'assets/logos/تجهیزاتی.png',
+        title: 'تجهیزات',
         color: Colors.white,
-        toWhere: '/login'),
+        toWhere: '/tajhizati'),
   ];
   List<HomeButton> centralRow = [
     HomeButton(
@@ -40,14 +40,14 @@ class _HomePageState extends State<HomePage> {
         icon: 'assets/logos/modir.png',
         title: 'ارتباط با مدیر',
         color: Colors.white,
-        toWhere: '/under'),
+        toWhere: '/ertebat'),
   ];
   List<HomeButton> lastRow = [
     HomeButton(
         icon: 'assets/logos/amaliyat.png',
         title: ' عملیات',
         color: Colors.white,
-        toWhere: '/under'),
+        toWhere: '/amaliyat'),
     HomeButton(
         icon: 'assets/logos/anbar.png',
         title: 'انبار و سیلو',
@@ -192,7 +192,8 @@ class HomeButton extends StatelessWidget {
           },
           padding: EdgeInsets.all(15.0),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5.0), //TODO: maybe change this!
+            borderRadius:
+                BorderRadius.circular(15.0), //TODO: maybe change this!
           ),
           color: color,
           child: Column(

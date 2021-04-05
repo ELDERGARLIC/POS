@@ -27,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Padding(
           padding: const EdgeInsets.only(right: 10.0),
           child: Text(
-            'ایمیل',
+            'نام کاربری',
             style: kLabelStyle,
             textAlign: TextAlign.right,
           ),
@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 color: Colors.white,
                 textDirection: TextDirection.rtl,
               ),
-              hintText: 'لطفا ایمیل خود را وارد کنید',
+              hintText: 'لطفا کد پرسنلی یا شماره همراه خود را وارد کنید',
               hintStyle: kHintTextStyle,
             ),
           ),
