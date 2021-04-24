@@ -15,21 +15,15 @@ class NetworkHelper {
     String sharh,
     String pishnahad,
   ) async {
-    Map<String, String> data = {
-      "task": "add",
-      "token": loggedUser.token,
-      "morede_darkhasti": moredeDarkhasti,
-      "darkhast_konande": darkhastKonande,
-      "sharh": sharh,
-      "pishnahad": pishnahad
-    };
-    var body = json.encode(data);
-
     final http.Response response = await http.post(
-      'https://zfif.ir/POS/DAO/',
-      headers: {},
+      'http://94.130.230.203:8585/civil',
+      headers: {
+        'authorization': loggedUser.globalToken,
+      },
       body: {
-        "DAOREQ": body,
+        'title': moredeDarkhasti,
+        'describtion': sharh,
+        'suggest': pishnahad,
       },
     );
     if (response.statusCode == 200 && response.body.isNotEmpty) {
@@ -37,7 +31,6 @@ class NetworkHelper {
       print(response.body);
       return jsonDecode(data);
     } else {
-      print(jsonDecode(body)['DAOREQ']);
       print(response.statusCode);
       print(response.body);
       print("LOL DUMB!");
@@ -89,7 +82,7 @@ Future<dynamic> getOmranData(
   Navigator.of(_keyLoader.currentContext, rootNavigator: true)
       .pop(); //close the dialoge
 
-  if (omranData['success'] == '1') {
+  if (omranData['successe'] == true) {
     showAlertDialog(context, true);
   } else {
     showAlertDialog(context, false);

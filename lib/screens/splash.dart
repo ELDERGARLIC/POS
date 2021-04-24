@@ -30,6 +30,7 @@ class _SplashState extends State<Splash> {
             post: prefs.getString('post'),
             nationalId: prefs.getString('nationalId'),
             phone: prefs.getString('phone'),
+            globalToken: prefs.getString('globalToken'),
             rememberMe: prefs.getBool('rememberMe'),
           );
           loggedUser = tempUser;

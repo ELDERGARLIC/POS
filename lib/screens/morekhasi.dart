@@ -1,3 +1,4 @@
+import 'package:corpapp/services/morekhasi/morekhasi_networking.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:corpapp/utilities/constants.dart';
@@ -198,6 +199,7 @@ class _MorekhasiState extends State<Morekhasi> {
                                             onPressed: () {
                                               setState(() {
                                                 _selectStartDate();
+                                                print(pickedStartDate);
                                               });
                                             },
                                             padding: EdgeInsets.all(15.0),
@@ -231,6 +233,7 @@ class _MorekhasiState extends State<Morekhasi> {
                                           onPressed: () {
                                             setState(() {
                                               _selectEndDate();
+                                              print(pickedEndDate);
                                             });
                                           },
                                           padding: EdgeInsets.all(15.0),
@@ -395,7 +398,16 @@ class _MorekhasiState extends State<Morekhasi> {
                                     child: RaisedButton(
                                       elevation: 5.0,
                                       onPressed: () async {
-                                        //TODO: IMPLEMENT THE API HERE
+                                        dynamic data = await getMorekhasiData(
+                                          context,
+                                          mored,
+                                          pickedStartDate,
+                                          pickedEndDate,
+                                          janeshinCodeController.text,
+                                          janeshinNameController.text,
+                                          janeshinFamlilyController.text,
+                                        );
+                                        print(data);
                                       },
                                       padding: EdgeInsets.all(15.0),
                                       shape: RoundedRectangleBorder(

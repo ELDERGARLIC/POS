@@ -3,12 +3,43 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:corpapp/utilities/global.dart';
 
+class Vehicle {
+  String name;
+  String owner;
+  String status;
+  Vehicle({this.name, this.owner, this.status});
+}
+
 class Tajhizati extends StatefulWidget {
+  final List<dynamic> tajhizat;
+  Tajhizati({this.tajhizat});
   @override
   _TajhizatiState createState() => _TajhizatiState();
 }
 
 class _TajhizatiState extends State<Tajhizati> {
+  List<Vehicle> silosList = <Vehicle>[];
+  List<BodyEl> widgetsList = <BodyEl>[];
+
+  @override
+  void initState() {
+    super.initState();
+    for (int i = 0; i < widget.tajhizat.length; i++) {
+      silosList.add(Vehicle(
+        name: widget.tajhizat[i]['name'],
+        owner: widget.tajhizat[i]['owner'],
+        status: widget.tajhizat[i]['status'],
+      ));
+    }
+    for (int i = 0; i < silosList.length; i++) {
+      widgetsList.add(BodyEl(
+        name: silosList[i].name,
+        owner: silosList[i].owner,
+        status: silosList[i].status,
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,98 +122,9 @@ class _TajhizatiState extends State<Tajhizati> {
                                 ],
                               ),
                             ),
-                            CustomizedTable(
-                              items: [
-                                TableRow(
-                                  children: [
-                                    Text(
-                                      "نام 1",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "مالک 1",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "رزرو",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            CustomizedTable(
-                              items: [
-                                TableRow(
-                                  children: [
-                                    Text(
-                                      "نام 2",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "مالک 2",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "مشغول",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            CustomizedTable(
-                              items: [
-                                TableRow(
-                                  children: [
-                                    Text(
-                                      "نام 3",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "مالک 3",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "مشغول",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            CustomizedTable(
-                              items: [
-                                TableRow(
-                                  children: [
-                                    Text(
-                                      "نام 4",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "مالک 4",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Text(
-                                      "آزاد",
-                                      textScaleFactor: 1.5,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                            Column(
+                              children: widgetsList,
+                            )
                           ],
                         ),
                       ),
@@ -194,6 +136,40 @@ class _TajhizatiState extends State<Tajhizati> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class BodyEl extends StatelessWidget {
+  final String name;
+  final String owner;
+  final String status;
+  BodyEl({this.name, this.owner, this.status});
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomizedTable(
+      items: [
+        TableRow(
+          children: [
+            Text(
+              name,
+              textScaleFactor: 1.5,
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              owner,
+              textScaleFactor: 1.5,
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              status,
+              textScaleFactor: 1.5,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

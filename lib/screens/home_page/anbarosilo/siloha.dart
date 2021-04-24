@@ -1,13 +1,94 @@
+import 'package:corpapp/screens/home_page/anbarosilo/siloha/mohtaviyatesilo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:corpapp/utilities/global.dart';
 
+class Silo {
+  String id;
+  String name;
+  String dateK;
+  String dateS;
+  String dateG;
+  String temp;
+  String apiCallDate;
+  String creationDate;
+  Silo({
+    this.id,
+    this.name,
+    this.dateK,
+    this.dateS,
+    this.dateG,
+    this.temp,
+    this.apiCallDate,
+    this.creationDate,
+  });
+}
+
 class Siloha extends StatefulWidget {
+  Siloha({this.silos});
+  final List<dynamic> silos;
   @override
   _SilohaState createState() => _SilohaState();
 }
 
 class _SilohaState extends State<Siloha> {
+  List<Silo> silosList = <Silo>[];
+  List<SpecialContainer> widgetsList = <SpecialContainer>[];
+
+  @override
+  void initState() {
+    super.initState();
+    print(widget.silos.length);
+    for (int i = 0; i < widget.silos.length; i++) {
+      silosList.add(Silo(
+        temp: widget.silos[i]['temp'],
+        id: widget.silos[i]['_id'],
+        dateG: widget.silos[i]['dateG'],
+        dateS: widget.silos[i]['dateS'],
+        name: widget.silos[i]['name'],
+        dateK: widget.silos[i]['dateK'],
+        creationDate: widget.silos[i]['createdAt'],
+        apiCallDate: widget.silos[i]['updatedAt'],
+      ));
+    }
+    for (int i = 0; i < silosList.length; i++) {
+      widgetsList.add(SpecialContainer(
+        dateK: silosList[i].dateK,
+        dateS: silosList[i].dateS,
+        dateG: silosList[i].dateG,
+        name: silosList[i].name,
+        temp: silosList[i].temp,
+        updateAt: silosList[i].apiCallDate,
+        id: silosList[i].id,
+        toWhere: () async {
+          final http.Response silosResponse = await http.post(
+            'http://94.130.230.203:8585/resource/fullsilo',
+            headers: {
+              'authorization': loggedUser.token,
+            },
+            body: {
+              'silo': silosList[i].id,
+              'all': '1',
+              'free': '0',
+            },
+          );
+          List<dynamic> calledSilosJson = jsonDecode(silosResponse.body);
+          print(silosResponse.body);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MohtaviyateSiloha(
+                silos: calledSilosJson,
+              ),
+            ),
+          );
+        },
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,17 +146,7 @@ class _SilohaState extends State<Siloha> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Column(
-                              children: [
-                                SpecialContainer(
-                                  tedad: '12',
-                                  zarfiyateKol: '41000',
-                                  zarfiyateKandoo: '3417',
-                                  ghotreKandoo: '16.8',
-                                  ertefaeKandoo: '18.3',
-                                  ertefaeMakhrooti: '4.8',
-                                  toWhere: '/mohtaviyatesiloha',
-                                ),
-                              ],
+                              children: widgetsList,
                             ),
                           ],
                         ),
@@ -93,22 +164,25 @@ class _SilohaState extends State<Siloha> {
 }
 
 class SpecialContainer extends StatelessWidget {
-  SpecialContainer(
-      {@required this.tedad,
-      @required this.zarfiyateKol,
-      @required this.zarfiyateKandoo,
-      @required this.ghotreKandoo,
-      @required this.ertefaeKandoo,
-      @required this.ertefaeMakhrooti,
-      @required this.toWhere});
+  SpecialContainer({
+    @required this.dateK,
+    @required this.dateS,
+    @required this.dateG,
+    @required this.name,
+    @required this.temp,
+    @required this.updateAt,
+    @required this.toWhere,
+    @required this.id,
+  });
 
-  final String tedad;
-  final String zarfiyateKol;
-  final String zarfiyateKandoo;
-  final String ghotreKandoo;
-  final String ertefaeKandoo;
-  final String ertefaeMakhrooti;
-  final String toWhere;
+  final String dateK;
+  final String dateS;
+  final String dateG;
+  final String name;
+  final String temp;
+  final String updateAt;
+  final String id;
+  final Function toWhere;
 
   @override
   Widget build(BuildContext context) {
@@ -117,12 +191,9 @@ class SpecialContainer extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 8.0),
         width: 320.0,
-        height: 250.0,
         child: RaisedButton(
           elevation: 5.0,
-          onPressed: () {
-            Navigator.pushNamed(context, toWhere);
-          },
+          onPressed: toWhere,
           padding: EdgeInsets.all(15.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
@@ -132,8 +203,16 @@ class SpecialContainer extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Column(
               children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5.0),
+                  child: Container(
+                    child: Image.asset('assets/logos/silo.png'),
+                    width: 45,
+                    height: 45,
+                  ),
+                ),
                 Text(
-                  "سیلو 6 پدیدآوران",
+                  name,
                   textAlign: TextAlign.center,
                   textDirection: TextDirection.rtl,
                   style: TextStyle(
@@ -144,35 +223,134 @@ class SpecialContainer extends StatelessWidget {
                     fontFamily: 'OpenSans',
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Table(
-                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                Container(
+                  width: 320,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      TableRow(
+                      Column(
                         children: [
-                          TableCell(
+                          Padding(
+                            padding: const EdgeInsets.all(2.0),
                             child: Text(
-                              "ظرفیت هر کندو",
+                              dateK.substring(0, 10),
                               textAlign: TextAlign.center,
                               textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
+                              style: TextStyle(
+                                color: Colors.grey.shade800,
+                                fontSize: 14.0,
+                                fontFamily: 'OpenSans',
+                              ),
                             ),
                           ),
-                          TableCell(
+                          Padding(
+                            padding: const EdgeInsets.all(2.0),
                             child: Text(
-                              "تعداد کندو",
+                              dateS.substring(0, 10),
                               textAlign: TextAlign.center,
                               textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
+                              style: TextStyle(
+                                color: Colors.grey.shade800,
+                                fontSize: 14.0,
+                                fontFamily: 'OpenSans',
+                              ),
                             ),
                           ),
-                          TableCell(
+                          Padding(
+                            padding: const EdgeInsets.all(2.0),
                             child: Text(
-                              "ظرفیت کل (تن)",
+                              dateG.substring(0, 10),
                               textAlign: TextAlign.center,
                               textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
+                              style: TextStyle(
+                                color: Colors.grey.shade800,
+                                fontSize: 14.0,
+                                fontFamily: 'OpenSans',
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: Text(
+                              temp,
+                              textAlign: TextAlign.center,
+                              textDirection: TextDirection.rtl,
+                              style: TextStyle(
+                                color: Colors.grey.shade800,
+                                fontSize: 14.0,
+                                fontFamily: 'OpenSans',
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: Text(
+                              updateAt.substring(0, 10),
+                              textAlign: TextAlign.center,
+                              textDirection: TextDirection.rtl,
+                              style: TextStyle(
+                                color: Colors.grey.shade800,
+                                fontSize: 14.0,
+                                fontFamily: 'OpenSans',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 42,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            "تاریخ کف روبی:",
+                            textAlign: TextAlign.center,
+                            textDirection: TextDirection.rtl,
+                            style: TextStyle(
+                              color: Color(0xFF527DAA),
+                              fontSize: 14.0,
+                              fontFamily: 'OpenSans',
+                            ),
+                          ),
+                          Text(
+                            "تاریخ سمپاشی:",
+                            textAlign: TextAlign.center,
+                            textDirection: TextDirection.rtl,
+                            style: TextStyle(
+                              color: Color(0xFF527DAA),
+                              fontSize: 14.0,
+                              fontFamily: 'OpenSans',
+                            ),
+                          ),
+                          Text(
+                            "تاریخ قرص گذاری:",
+                            textAlign: TextAlign.center,
+                            textDirection: TextDirection.rtl,
+                            style: TextStyle(
+                              color: Color(0xFF527DAA),
+                              fontSize: 14.0,
+                              fontFamily: 'OpenSans',
+                            ),
+                          ),
+                          Text(
+                            "دما:",
+                            textAlign: TextAlign.center,
+                            textDirection: TextDirection.rtl,
+                            style: TextStyle(
+                              color: Color(0xFF527DAA),
+                              fontSize: 14.0,
+                              fontFamily: 'OpenSans',
+                            ),
+                          ),
+                          Text(
+                            "تاریخ و زمان آپدیت این سیلو:",
+                            textAlign: TextAlign.center,
+                            textDirection: TextDirection.rtl,
+                            style: TextStyle(
+                              color: Color(0xFF527DAA),
+                              fontSize: 14.0,
+                              fontFamily: 'OpenSans',
                             ),
                           ),
                         ],
@@ -180,117 +358,8 @@ class SpecialContainer extends StatelessWidget {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Table(
-                    textDirection: TextDirection.rtl,
-                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                    border: TableBorder.all(width: 2.0, color: Colors.black),
-                    children: [
-                      TableRow(
-                        children: [
-                          TableCell(
-                            child: Text(
-                              zarfiyateKol,
-                              textAlign: TextAlign.center,
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          TableCell(
-                            child: Text(
-                              tedad,
-                              textAlign: TextAlign.center,
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          TableCell(
-                            child: Text(
-                              zarfiyateKandoo,
-                              textAlign: TextAlign.center,
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Table(
-                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                    children: [
-                      TableRow(
-                        children: [
-                          TableCell(
-                            child: Text(
-                              "ارتفاع مخروطی",
-                              textAlign: TextAlign.center,
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          TableCell(
-                            child: Text(
-                              "ارتفاع کندو",
-                              textAlign: TextAlign.center,
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          TableCell(
-                            child: Text(
-                              "قطر کندو",
-                              textAlign: TextAlign.center,
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Table(
-                    textDirection: TextDirection.rtl,
-                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                    border: TableBorder.all(width: 2.0, color: Colors.black),
-                    children: [
-                      TableRow(
-                        children: [
-                          TableCell(
-                            child: Text(
-                              ghotreKandoo,
-                              textAlign: TextAlign.center,
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          TableCell(
-                            child: Text(
-                              ertefaeKandoo,
-                              textAlign: TextAlign.center,
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          TableCell(
-                            child: Text(
-                              ertefaeMakhrooti,
-                              textAlign: TextAlign.center,
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                SizedBox(
+                  height: 8,
                 ),
               ],
             ),

@@ -33,16 +33,17 @@ class _LoadingScreenState extends State<LoadingScreen> {
     //print(basicData['success']);
     //print(rememberMe);
 
-    if (basicData['success'] == '1') {
+    if (basicData.toString().substring(1, 6) != 'error') {
       // CREATE NEW USER AND PUSH IT AS GLOBAL LOGGED USER.
       User newUser = User(
-        token: basicData['token'],
-        personalCode: basicData['info']['personnelCode'],
-        fName: basicData['info']['fName'],
-        lName: basicData['info']['lName'],
-        post: basicData['info']['post'],
-        nationalId: basicData['info']['nationalId'],
-        phone: basicData['info']['phone'],
+        token: basicData['data']['_id'].toString(),
+        personalCode: basicData['data']['PCode'].toString(),
+        fName: basicData['data']['Fname'].toString(),
+        lName: basicData['data']['Lname'].toString(),
+        post: basicData['data']['Post'].toString(),
+        nationalId: basicData['data']['Ncode'].toString(),
+        phone: basicData['data']['phone'].toString(),
+        globalToken: globalToken,
         rememberMe: rememberMe,
       );
       loggedUser = newUser;
@@ -57,6 +58,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
         prefs.setString('post', loggedUser.post);
         prefs.setString('nationalId', loggedUser.nationalId);
         prefs.setString('phone', loggedUser.phone);
+        prefs.setString('globalToken', loggedUser.globalToken);
         prefs.setBool('rememberMe', loggedUser.rememberMe);
       }
       Navigator.pop(context);

@@ -8,9 +8,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  bool _tajihizatiCheck = false;
-  bool _abniyeCheck = false;
-  bool _tasisatiCheck = false;
   String mored = "";
   TextEditingController darkhastController = new TextEditingController();
   TextEditingController pishnehadController = new TextEditingController();
@@ -23,18 +20,6 @@ class _ProfileState extends State<Profile> {
         backgroundColor: Color(0xFF73AEF5),
       ),
       endDrawer: returnDrawer(context),
-      floatingActionButton: Container(
-        width: 120,
-        child: FloatingActionButton(
-          backgroundColor: Color(0xFF61A4F1),
-          onPressed: () {
-            Navigator.pushNamed(context, '/morekhasi');
-          },
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10.0))),
-          child: Text("درخواست مرخصی  "),
-        ),
-      ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(
@@ -88,7 +73,7 @@ class _ProfileState extends State<Profile> {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(right: 12.0),
+                                    padding: const EdgeInsets.only(right: 20.0),
                                     child: Text(
                                       'مشخصات فردی',
                                       style: TextStyle(
@@ -99,45 +84,151 @@ class _ProfileState extends State<Profile> {
                                       ),
                                     ),
                                   ),
-                                  ProfileBox(
-                                    color: Colors.white,
-                                    title: "نام:",
-                                    pWidth: MediaQuery.of(context).size.width,
-                                    data: loggedUser.fName,
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      ProfileBox(
+                                        color: Colors.white,
+                                        title: "نام:",
+                                        pWidth:
+                                            MediaQuery.of(context).size.width,
+                                        data: loggedUser.fName,
+                                      ),
+                                      ProfileBox(
+                                        color: Colors.white,
+                                        title: "نام خانوادگی:",
+                                        pWidth:
+                                            MediaQuery.of(context).size.width,
+                                        data: loggedUser.lName,
+                                      ),
+                                      ProfileBox(
+                                        color: Colors.white,
+                                        title: "شغل:",
+                                        pWidth:
+                                            MediaQuery.of(context).size.width,
+                                        data: loggedUser.post,
+                                      ),
+                                      ProfileBox(
+                                        color: Colors.white,
+                                        title: "کد ملی:",
+                                        pWidth:
+                                            MediaQuery.of(context).size.width,
+                                        data: loggedUser.nationalId,
+                                      ),
+                                      ProfileBox(
+                                        color: Colors.white,
+                                        title: "شماره همراه:",
+                                        pWidth:
+                                            MediaQuery.of(context).size.width,
+                                        data: loggedUser.phone,
+                                      ),
+                                      ProfileBox(
+                                        color: Colors.white,
+                                        title: "کد پرسنلی:",
+                                        pWidth:
+                                            MediaQuery.of(context).size.width,
+                                        data: loggedUser.personalCode,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          child: RaisedButton(
+                                            elevation: 5.0,
+                                            onPressed: () {
+                                              Navigator.pushNamed(
+                                                context,
+                                                '/it',
+                                              );
+                                            },
+                                            padding: EdgeInsets.all(15.0),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30.0),
+                                            ),
+                                            color: Colors.white,
+                                            child: Container(
+                                              width: 150,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    Icons.settings,
+                                                    color: Colors.blue.shade700,
+                                                  ),
+                                                  Text(
+                                                    "درخواست IT ",
+                                                    textAlign: TextAlign.end,
+                                                    textDirection:
+                                                        TextDirection.rtl,
+                                                    style: TextStyle(
+                                                      color: Color(0xFF527DAA),
+                                                      letterSpacing: 1.5,
+                                                      fontSize: 14.0,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontFamily: 'OpenSans',
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          child: RaisedButton(
+                                            elevation: 5.0,
+                                            onPressed: () {
+                                              Navigator.pushNamed(
+                                                context,
+                                                '/morekhasi',
+                                              );
+                                            },
+                                            padding: EdgeInsets.all(15.0),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30.0),
+                                            ),
+                                            color: Colors.white,
+                                            child: Container(
+                                              width: 150,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    Icons.settings,
+                                                    color: Colors.blue.shade700,
+                                                  ),
+                                                  Text(
+                                                    "درخواست مرخصی ",
+                                                    textAlign: TextAlign.end,
+                                                    textDirection:
+                                                        TextDirection.rtl,
+                                                    style: TextStyle(
+                                                      color: Color(0xFF527DAA),
+                                                      letterSpacing: 1.5,
+                                                      fontSize: 14.0,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontFamily: 'OpenSans',
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 150,
+                                      )
+                                    ],
                                   ),
-                                  ProfileBox(
-                                    color: Colors.white,
-                                    title: "نام خانوادگی:",
-                                    pWidth: MediaQuery.of(context).size.width,
-                                    data: loggedUser.lName,
-                                  ),
-                                  ProfileBox(
-                                    color: Colors.white,
-                                    title: "شغل:",
-                                    pWidth: MediaQuery.of(context).size.width,
-                                    data: loggedUser.post,
-                                  ),
-                                  ProfileBox(
-                                    color: Colors.white,
-                                    title: "کد ملی:",
-                                    pWidth: MediaQuery.of(context).size.width,
-                                    data: loggedUser.nationalId,
-                                  ),
-                                  ProfileBox(
-                                    color: Colors.white,
-                                    title: "شماره همراه:",
-                                    pWidth: MediaQuery.of(context).size.width,
-                                    data: loggedUser.phone,
-                                  ),
-                                  ProfileBox(
-                                    color: Colors.white,
-                                    title: "کد پرسنلی:",
-                                    pWidth: MediaQuery.of(context).size.width,
-                                    data: loggedUser.personalCode,
-                                  ),
-                                  SizedBox(
-                                    height: 150,
-                                  )
                                 ],
                               ),
                             ],

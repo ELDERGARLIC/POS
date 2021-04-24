@@ -1,5 +1,10 @@
+import 'package:corpapp/screens/home_page/anbarosilo/anbarha.dart';
+import 'package:corpapp/screens/home_page/anbarosilo/mohavate.dart';
+import 'package:corpapp/screens/home_page/anbarosilo/siloha.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:corpapp/utilities/global.dart';
 
 class AnbaroSilo extends StatefulWidget {
@@ -67,29 +72,91 @@ class _AnbaroSiloState extends State<AnbaroSilo> {
                             Column(
                               children: [
                                 HomeButton(
-                                    icon: 'assets/logos/anbarlist.png',
-                                    title: 'انبار ',
-                                    color: Colors.white,
-                                    toWhere: '/anbarha'),
+                                  icon: 'assets/logos/anbarlist.png',
+                                  title: 'انبار ',
+                                  color: Colors.white,
+                                  toWhere: () async {
+                                    final http.Response anbarResponse =
+                                        await http.get(
+                                      'http://94.130.230.203:8585/resource/storages',
+                                      headers: {
+                                        'authorization': loggedUser.token,
+                                      },
+                                    );
+                                    List<dynamic> calledSilosJson =
+                                        jsonDecode(anbarResponse.body);
+                                    print(calledSilosJson);
+
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Anbarha(
+                                          anbarha: calledSilosJson,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
                                 HomeButton(
-                                    icon: 'assets/logos/eskele.png',
-                                    title: 'کانتینری',
-                                    color: Colors.white,
-                                    toWhere: '/eskele'),
+                                  icon: 'assets/logos/eskele.png',
+                                  title: 'کانتینری',
+                                  color: Colors.white,
+                                  toWhere: () {
+                                    Navigator.pushNamed(context, '/eskele');
+                                  },
+                                ),
                               ],
                             ),
                             Column(
                               children: [
                                 HomeButton(
-                                    icon: 'assets/logos/silo.png',
-                                    title: 'سیلو ',
-                                    color: Colors.white,
-                                    toWhere: '/mohtaviyatesiloha'),
+                                  icon: 'assets/logos/silo.png',
+                                  title: 'سیلو ',
+                                  color: Colors.white,
+                                  toWhere: () async {
+                                    final http.Response silosResponse =
+                                        await http.get(
+                                      'http://94.130.230.203:8585/resource/silos',
+                                      headers: {
+                                        'authorization': loggedUser.token,
+                                      },
+                                    );
+                                    List<dynamic> calledSilosJson =
+                                        jsonDecode(silosResponse.body);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Siloha(
+                                          silos: calledSilosJson,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
                                 HomeButton(
-                                    icon: 'assets/logos/mohavate.png',
-                                    title: 'محوطه',
-                                    color: Colors.white,
-                                    toWhere: '/mohavate'),
+                                  icon: 'assets/logos/mohavate.png',
+                                  title: 'محوطه',
+                                  color: Colors.white,
+                                  toWhere: () async {
+                                    final http.Response silosResponse =
+                                        await http.get(
+                                      'http://94.130.230.203:8585/resource/areas',
+                                      headers: {
+                                        'authorization': loggedUser.token,
+                                      },
+                                    );
+                                    List<dynamic> calledSilosJson =
+                                        jsonDecode(silosResponse.body);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Mohavate(
+                                          mohavateha: calledSilosJson,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
                               ],
                             ),
                           ],
@@ -117,7 +184,7 @@ class HomeButton extends StatelessWidget {
   final Color color;
   final String title;
   final String icon;
-  final String toWhere;
+  final Function toWhere;
 
   @override
   Widget build(BuildContext context) {
@@ -129,9 +196,7 @@ class HomeButton extends StatelessWidget {
         height: 112.0,
         child: RaisedButton(
           elevation: 5.0,
-          onPressed: () {
-            Navigator.pushNamed(context, toWhere);
-          },
+          onPressed: toWhere,
           padding: EdgeInsets.all(15.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),

@@ -1,13 +1,68 @@
+import 'package:corpapp/screens/home_page/anbarosilo/anbarha/anbar_details.dart';
+import 'package:corpapp/screens/home_page/anbarosilo/mohavate/mohavate_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:corpapp/utilities/global.dart';
 
+class MohavateClass {
+  String id;
+  String name;
+  MohavateClass({this.id, this.name});
+}
+
 class Mohavate extends StatefulWidget {
+  final List<dynamic> mohavateha;
+  Mohavate({this.mohavateha});
+
   @override
   _MohavateState createState() => _MohavateState();
 }
 
 class _MohavateState extends State<Mohavate> {
+  List<SpecialContainer> widgetsList = <SpecialContainer>[];
+  List<MohavateClass> mohavateList = <MohavateClass>[];
+
+  @override
+  void initState() {
+    super.initState();
+    for (int i = 0; i < widget.mohavateha.length; i++) {
+      mohavateList.add(MohavateClass(
+          id: widget.mohavateha[i]['_id'], name: widget.mohavateha[i]['name']));
+    }
+    for (int i = 0; i < mohavateList.length; i++) {
+      widgetsList.add(SpecialContainer(
+        onvan: mohavateList[i].name,
+        toWhere: () async {
+          final http.Response anbarResponse = await http.post(
+            'http://94.130.230.203:8585/resource/fullarea',
+            headers: {
+              'authorization': loggedUser.token,
+            },
+            body: {
+              'area': mohavateList[i].id,
+              'all': '1',
+              'free': '0',
+            },
+          );
+          List<dynamic> calledSilosJson = jsonDecode(anbarResponse.body);
+          print(widget.mohavateha[i]['_id']);
+          print(calledSilosJson);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MohavateDetails(
+                //TODO:LEFTOVER PART!!!!!
+                mohavates: calledSilosJson,
+              ),
+            ),
+          );
+        },
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,232 +116,11 @@ class _MohavateState extends State<Mohavate> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 5.0),
-                        child: Column(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Table(
-                                defaultVerticalAlignment:
-                                    TableCellVerticalAlignment.middle,
-                                children: [
-                                  TableRow(children: [
-                                    Text(
-                                      "ظرفیت متر مربع",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(fontSize: 14),
-                                    ),
-                                    Text(
-                                      "نام محوطه",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(fontSize: 14),
-                                    ),
-                                    Text(
-                                      "موقعیت",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(fontSize: 14),
-                                    ),
-                                    Text(
-                                      "نام محوطه",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(fontSize: 14),
-                                    ),
-                                    Text(
-                                      "ردیف",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(fontSize: 14),
-                                    ),
-                                  ]),
-                                ],
-                              ),
-                            ),
-                            CustomizedTable(
-                              items: [
-                                TableRow(children: [
-                                  TableCell(
-                                      child: Text(
-                                    "1",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                  TableCell(
-                                      child: Text(
-                                    "محوطه E",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                  TableCell(
-                                      child: Text(
-                                    "ضلع شرقی انبار 1",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                  TableCell(
-                                      child: Text(
-                                    "محوطه کالای خطرناک",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                  TableCell(
-                                      child: Text(
-                                    "56254m^2",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                ]),
-                                TableRow(children: [
-                                  TableCell(
-                                      child: Text(
-                                    "2",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                  TableCell(
-                                      child: Text(
-                                    "محوطه A-B-C",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                  TableCell(
-                                      child: Text(
-                                    "روبروی اسکله 4 الی 6",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                  TableCell(
-                                      child: Text(
-                                    "محوطه کالای متفرقه",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                  TableCell(
-                                      child: Text(
-                                    "56254m^2",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                ]),
-                                TableRow(children: [
-                                  TableCell(
-                                      child: Text(
-                                    "3",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                  TableCell(
-                                      child: Text(
-                                    "محوطه L",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                  TableCell(
-                                      child: Text(
-                                    "پشت اسکله 9‍",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                  TableCell(
-                                      child: Text(
-                                    "کانتینری",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                  TableCell(
-                                      child: Text(
-                                    "56254m^2",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                ]),
-                                TableRow(children: [
-                                  TableCell(
-                                      child: Text(
-                                    "4",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                  TableCell(
-                                      child: Text(
-                                    "محوطه F2",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                  TableCell(
-                                      child: Text(
-                                    "پشت انبار 8",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                  TableCell(
-                                      child: Text(
-                                    "کک نفتی",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                  TableCell(
-                                      child: Text(
-                                    "56254m^2",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                ]),
-                                TableRow(children: [
-                                  TableCell(
-                                      child: Text(
-                                    "۵",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                  TableCell(
-                                      child: Text(
-                                    "محوطه K5",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                  TableCell(
-                                      child: Text(
-                                    "روبه روی محوطه کک نفتی",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                  TableCell(
-                                      child: Text(
-                                    "آهن قراضه",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                  TableCell(
-                                      child: Text(
-                                    "56254m^2",
-                                    textAlign: TextAlign.center,
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                ]),
-                              ],
+                            Column(
+                              children: widgetsList,
                             ),
                           ],
                         ),
@@ -303,17 +137,11 @@ class _MohavateState extends State<Mohavate> {
   }
 }
 
-class HomeButton extends StatelessWidget {
-  HomeButton(
-      {@required this.color,
-      @required this.title,
-      @required this.icon,
-      @required this.toWhere});
+class SpecialContainer extends StatelessWidget {
+  SpecialContainer({@required this.onvan, @required this.toWhere});
 
-  final Color color;
-  final String title;
-  final String icon;
-  final String toWhere;
+  final String onvan;
+  final Function toWhere;
 
   @override
   Widget build(BuildContext context) {
@@ -321,90 +149,44 @@ class HomeButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 8.0),
-        width: 105.0,
-        height: 112.0,
+        width: 340.0,
         child: RaisedButton(
           elevation: 5.0,
-          onPressed: () {
-            Navigator.pushNamed(context, toWhere);
-          },
+          onPressed: toWhere,
           padding: EdgeInsets.all(15.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-          color: color,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                child: Image.asset(icon),
-                width: 40,
-                height: 40,
-              ),
-              Text(
-                title,
-                textAlign: TextAlign.center,
-                textDirection: TextDirection.rtl,
-                style: TextStyle(
-                  color: Color(0xFF527DAA),
-                  letterSpacing: 1.5,
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'OpenSans',
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Column(
+              children: [
+                Container(
+                  child: Image.asset('assets/logos/mohavate.png'),
+                  width: 40,
+                  height: 40,
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  onvan,
+                  textAlign: TextAlign.center,
+                  textDirection: TextDirection.rtl,
+                  style: TextStyle(
+                    color: Color(0xFF527DAA),
+                    letterSpacing: 1.0,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'OpenSans',
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
-    );
-  }
-}
-
-class CustomizedTable extends StatelessWidget {
-  CustomizedTable({@required this.items});
-
-  final List<TableRow> items;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 10,
-        ),
-        Material(
-          elevation: 20,
-          borderRadius: BorderRadius.circular(10),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Table(
-                textDirection: TextDirection.rtl,
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                border: TableBorder(
-                  horizontalInside: BorderSide(
-                    width: 1,
-                    color: Colors.grey,
-                    style: BorderStyle.solid,
-                  ),
-                  verticalInside: BorderSide(
-                    width: 1,
-                    color: Colors.grey,
-                    style: BorderStyle.solid,
-                  ),
-                ),
-                children: items,
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

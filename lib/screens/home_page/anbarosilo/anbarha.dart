@@ -1,13 +1,66 @@
+import 'package:corpapp/screens/home_page/anbarosilo/anbarha/anbar_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:corpapp/utilities/global.dart';
 
+class Anbar {
+  String id;
+  String name;
+  Anbar({this.id, this.name});
+}
+
 class Anbarha extends StatefulWidget {
+  final List<dynamic> anbarha;
+  Anbarha({this.anbarha});
+
   @override
   _AnbarhaState createState() => _AnbarhaState();
 }
 
 class _AnbarhaState extends State<Anbarha> {
+  List<SpecialContainer> widgetsList = <SpecialContainer>[];
+  List<Anbar> anbarList = <Anbar>[];
+
+  @override
+  void initState() {
+    super.initState();
+    for (int i = 0; i < widget.anbarha.length; i++) {
+      anbarList.add(
+          Anbar(id: widget.anbarha[i]['_id'], name: widget.anbarha[i]['name']));
+    }
+    for (int i = 0; i < anbarList.length; i++) {
+      widgetsList.add(SpecialContainer(
+        onvan: anbarList[i].name,
+        toWhere: () async {
+          final http.Response anbarResponse = await http.post(
+            'http://94.130.230.203:8585/resource/fullstorage',
+            headers: {
+              'authorization': loggedUser.token,
+            },
+            body: {
+              'storage': anbarList[i].id,
+              'all': '1',
+              'free': '0',
+            },
+          );
+          List<dynamic> calledSilosJson = jsonDecode(anbarResponse.body);
+          print(widget.anbarha[i]['_id']);
+          print(calledSilosJson);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AnbarDetails(
+                anbars: calledSilosJson,
+              ),
+            ),
+          );
+        },
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,48 +118,7 @@ class _AnbarhaState extends State<Anbarha> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Column(
-                              children: [
-                                SpecialContainer(
-                                  radif: '1',
-                                  onvan: 'انبار 1',
-                                  masahat: '12000m²',
-                                  zarfiyat: '25000',
-                                  tool: '200',
-                                  arz: '60',
-                                  ertefa: '6.5',
-                                  toWhere: '/anbare1',
-                                ),
-                                SpecialContainer(
-                                  radif: '2',
-                                  onvan: 'انبار 2',
-                                  masahat: '10000m²',
-                                  zarfiyat: '20000',
-                                  tool: '100',
-                                  arz: '100',
-                                  ertefa: '6.5',
-                                  toWhere: '/anbare2',
-                                ),
-                                SpecialContainer(
-                                  radif: '3',
-                                  onvan: 'انبار 3',
-                                  masahat: '10000m²',
-                                  zarfiyat: '20000',
-                                  tool: '100',
-                                  arz: '100',
-                                  ertefa: '6.5',
-                                  toWhere: '/anbare3',
-                                ),
-                                SpecialContainer(
-                                  radif: '4',
-                                  onvan: 'انبار 4',
-                                  masahat: '10000m²',
-                                  zarfiyat: '20000',
-                                  tool: '100',
-                                  arz: '100',
-                                  ertefa: '6.5',
-                                  toWhere: '/anbare4',
-                                ),
-                              ],
+                              children: widgetsList,
                             ),
                           ],
                         ),
@@ -124,24 +136,10 @@ class _AnbarhaState extends State<Anbarha> {
 }
 
 class SpecialContainer extends StatelessWidget {
-  SpecialContainer(
-      {@required this.radif,
-      @required this.onvan,
-      @required this.masahat,
-      @required this.zarfiyat,
-      @required this.tool,
-      @required this.arz,
-      @required this.ertefa,
-      @required this.toWhere});
+  SpecialContainer({@required this.onvan, @required this.toWhere});
 
-  final String radif;
   final String onvan;
-  final String masahat;
-  final String zarfiyat;
-  final String tool;
-  final String arz;
-  final String ertefa;
-  final String toWhere;
+  final Function toWhere;
 
   @override
   Widget build(BuildContext context) {
@@ -150,12 +148,9 @@ class SpecialContainer extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 8.0),
         width: 340.0,
-        height: 170.0,
         child: RaisedButton(
           elevation: 5.0,
-          onPressed: () {
-            Navigator.pushNamed(context, toWhere);
-          },
+          onPressed: toWhere,
           padding: EdgeInsets.all(15.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
@@ -165,6 +160,14 @@ class SpecialContainer extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Column(
               children: [
+                Container(
+                  child: Image.asset('assets/logos/anbarlist.png'),
+                  width: 40,
+                  height: 40,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
                 Text(
                   onvan,
                   textAlign: TextAlign.center,
@@ -175,118 +178,6 @@ class SpecialContainer extends StatelessWidget {
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'OpenSans',
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Table(
-                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                    children: [
-                      TableRow(
-                        children: [
-                          TableCell(
-                            child: Text(
-                              "ارتفاع حداقل",
-                              textAlign: TextAlign.center,
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          TableCell(
-                            child: Text(
-                              "عرض",
-                              textAlign: TextAlign.center,
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          TableCell(
-                            child: Text(
-                              "طول",
-                              textAlign: TextAlign.center,
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          TableCell(
-                            child: Text(
-                              "ظرفیت تناژ اسمی",
-                              textAlign: TextAlign.center,
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          TableCell(
-                            child: Text(
-                              "مساحت",
-                              textAlign: TextAlign.center,
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Table(
-                    textDirection: TextDirection.rtl,
-                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                    border: TableBorder(
-                      verticalInside: BorderSide(
-                        width: 2,
-                        color: Colors.grey,
-                        style: BorderStyle.solid,
-                      ),
-                    ),
-                    children: [
-                      TableRow(
-                        children: [
-                          TableCell(
-                            child: Text(
-                              masahat,
-                              textAlign: TextAlign.center,
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          TableCell(
-                            child: Text(
-                              zarfiyat,
-                              textAlign: TextAlign.center,
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          TableCell(
-                            child: Text(
-                              tool,
-                              textAlign: TextAlign.center,
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          TableCell(
-                            child: Text(
-                              arz,
-                              textAlign: TextAlign.center,
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          TableCell(
-                            child: Text(
-                              ertefa,
-                              textAlign: TextAlign.center,
-                              textDirection: TextDirection.rtl,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
                   ),
                 ),
               ],

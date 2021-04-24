@@ -14,7 +14,6 @@ import 'screens/home_page/anbarosilo.dart';
 import 'screens/home_page/anbarosilo/anbarha.dart';
 import 'screens/home_page/anbarosilo/eskele.dart';
 import 'screens/home_page/anbarosilo/mohavate.dart';
-import 'screens/home_page/anbarosilo/siloha.dart';
 
 import 'screens/home_page/anbarosilo/eskele/eskele_a.dart';
 import 'screens/home_page/anbarosilo/eskele/eskele_b.dart';
@@ -22,16 +21,14 @@ import 'screens/home_page/anbarosilo/eskele/eskele_c.dart';
 import 'screens/home_page/anbarosilo/eskele/eskele_d.dart';
 import 'screens/home_page/anbarosilo/eskele/eskele_e.dart';
 
-import 'screens/home_page/anbarosilo/anbarha/anbare1.dart';
-import 'screens/home_page/anbarosilo/anbarha/anbare2.dart';
-import 'screens/home_page/anbarosilo/anbarha/anbare3.dart';
-import 'screens/home_page/anbarosilo/anbarha/anbare4.dart';
-
+import 'screens/home_page/anbarosilo/anbarha/anbar_details.dart';
 import 'screens/home_page/anbarosilo/siloha/mohtaviyatesilo.dart';
 
 import 'screens/home_page/omran.dart';
 import 'screens/home_page/profile.dart';
 import 'screens/home_page/tajhizati.dart';
+import 'screens/home_page/it_page.dart';
+import 'screens/home_page/kharid.dart';
 import 'screens/morekhasi.dart';
 
 import 'screens/liste_darkhast/liste_darkhast_page.dart';
@@ -57,16 +54,12 @@ class MyApp extends StatelessWidget {
         '/anbarha': (context) => Anbarha(),
         '/eskele': (context) => Eskele(),
         '/mohavate': (context) => Mohavate(),
-        '/siloha': (context) => Siloha(),
         '/eskeleA': (context) => EskeleA(),
         '/eskeleB': (context) => EskeleB(),
         '/eskeleC': (context) => EskeleC(),
         '/eskeleD': (context) => EskeleD(),
         '/eskeleE': (context) => EskeleE(),
-        '/anbare1': (context) => Anbare1(),
-        '/anbare2': (context) => Anbare2(),
-        '/anbare3': (context) => Anbare3(),
-        '/anbare4': (context) => Anbare4(),
+        '/anbare1': (context) => AnbarDetails(),
         '/mohtaviyatesiloha': (context) => MohtaviyateSiloha(),
         '/omran': (context) => Omran(),
         '/listeDarkhast': (context) => ListeDarkhastPage(),
@@ -75,6 +68,8 @@ class MyApp extends StatelessWidget {
         '/amaliyat': (context) => Amaliyat(),
         '/ertebat': (context) => ErtebatBaModir(),
         '/tajhizati': (context) => Tajhizati(),
+        '/it': (context) => ItPage(),
+        '/kharid': (context) => Kharid(),
         '/test': (context) => TestAPI(),
       },
     );

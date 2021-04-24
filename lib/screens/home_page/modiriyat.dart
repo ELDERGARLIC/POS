@@ -75,7 +75,7 @@ class _ModiriyatState extends State<Modiriyat> {
                                     icon: 'assets/logos/mamooriyat.png',
                                     title: 'ماموریت',
                                     color: Colors.white,
-                                    toWhere: '/under'),
+                                    toWhere: '/test'),
                                 HomeButton(
                                     icon: 'assets/logos/cheshm.png',
                                     title: 'چشم انداز',

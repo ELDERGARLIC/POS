@@ -8,6 +8,7 @@ import 'package:corpapp/services/liste_darkhast/liste_darkhast_networking.dart';
 var basicData;
 bool rememberMe = false;
 User loggedUser;
+String globalToken;
 
 // CLASSES
 class User {
@@ -18,6 +19,7 @@ class User {
   String post;
   String nationalId;
   String phone;
+  String globalToken;
   bool rememberMe;
 
   User({
@@ -29,6 +31,7 @@ class User {
     @required this.nationalId,
     @required this.phone,
     @required this.rememberMe,
+    @required this.globalToken,
   });
 }
 
@@ -70,6 +73,7 @@ void logOutFunction(BuildContext context) async {
         prefs.remove('nationalId');
         prefs.remove('phone');
         prefs.remove('rememberMe');
+        prefs.remove('globalToken');
         Navigator.pop(context); //pop dialog
         Navigator.pushNamed(context, '/login');
       },

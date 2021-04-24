@@ -1,5 +1,8 @@
+import 'package:corpapp/screens/home_page/tajhizati.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:corpapp/utilities/global.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,11 +13,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<HomeButton> firstRow = [
     HomeButton(
-        icon: 'assets/logos/amoozesh.png',
-        title: 'آموزش',
-        color: Colors.white,
-        toWhere: '/login'),
-    HomeButton(
         icon: 'assets/logos/profile.png',
         title: 'پروفایل',
         color: Colors.white,
@@ -24,6 +22,11 @@ class _HomePageState extends State<HomePage> {
         title: 'تجهیزات',
         color: Colors.white,
         toWhere: '/tajhizati'),
+    HomeButton(
+        icon: 'assets/logos/exit.png',
+        title: 'خروج',
+        color: Colors.white,
+        toWhere: '/login'),
   ];
   List<HomeButton> centralRow = [
     HomeButton(
@@ -35,7 +38,7 @@ class _HomePageState extends State<HomePage> {
         icon: 'assets/logos/kharid.png',
         title: 'خرید',
         color: Colors.white,
-        toWhere: '/under'),
+        toWhere: '/kharid'),
     HomeButton(
         icon: 'assets/logos/modir.png',
         title: 'ارتباط با مدیر',
@@ -186,6 +189,26 @@ class HomeButton extends StatelessWidget {
               Future.delayed(Duration(seconds: 1), () {
                 Navigator.pop(context);
               });
+            } else if (toWhere == '/tajhizati') {
+              final http.Response silosResponse = await http.post(
+                'http://94.130.230.203:8585/operation/getvehicle',
+                headers: {
+                  'authorization': loggedUser.token,
+                },
+                body: {
+                  'all': '1',
+                },
+              );
+              List<dynamic> calledSilosJson = jsonDecode(silosResponse.body);
+              print(calledSilosJson);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Tajhizati(
+                    tajhizat: calledSilosJson,
+                  ),
+                ),
+              );
             } else {
               Navigator.pushNamed(context, toWhere);
             }
