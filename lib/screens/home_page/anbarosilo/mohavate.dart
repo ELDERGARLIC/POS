@@ -6,12 +6,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:corpapp/utilities/global.dart';
 
-class MohavateClass {
-  String id;
-  String name;
-  MohavateClass({this.id, this.name});
-}
-
 class Mohavate extends StatefulWidget {
   final List<dynamic> mohavateha;
   Mohavate({this.mohavateha});
@@ -53,7 +47,6 @@ class _MohavateState extends State<Mohavate> {
             context,
             MaterialPageRoute(
               builder: (context) => MohavateDetails(
-                //TODO:LEFTOVER PART!!!!!
                 mohavates: calledSilosJson,
               ),
             ),

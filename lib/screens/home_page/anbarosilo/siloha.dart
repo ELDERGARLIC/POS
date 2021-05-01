@@ -5,27 +5,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:corpapp/utilities/global.dart';
 
-class Silo {
-  String id;
-  String name;
-  String dateK;
-  String dateS;
-  String dateG;
-  String temp;
-  String apiCallDate;
-  String creationDate;
-  Silo({
-    this.id,
-    this.name,
-    this.dateK,
-    this.dateS,
-    this.dateG,
-    this.temp,
-    this.apiCallDate,
-    this.creationDate,
-  });
-}
-
 class Siloha extends StatefulWidget {
   Siloha({this.silos});
   final List<dynamic> silos;
@@ -34,7 +13,7 @@ class Siloha extends StatefulWidget {
 }
 
 class _SilohaState extends State<Siloha> {
-  List<Silo> silosList = <Silo>[];
+  List<SiloClass> silosList = <SiloClass>[];
   List<SpecialContainer> widgetsList = <SpecialContainer>[];
 
   @override
@@ -42,7 +21,7 @@ class _SilohaState extends State<Siloha> {
     super.initState();
     print(widget.silos.length);
     for (int i = 0; i < widget.silos.length; i++) {
-      silosList.add(Silo(
+      silosList.add(SiloClass(
         temp: widget.silos[i]['temp'],
         id: widget.silos[i]['_id'],
         dateG: widget.silos[i]['dateG'],

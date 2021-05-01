@@ -1,3 +1,4 @@
+import 'package:corpapp/screens/home_page/amaliyat.dart';
 import 'package:corpapp/screens/home_page/tajhizati.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -206,6 +207,39 @@ class HomeButton extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => Tajhizati(
                     tajhizat: calledSilosJson,
+                  ),
+                ),
+              );
+            } else if (toWhere == '/amaliyat') {
+              List<Vehicle> vehiclesList = <Vehicle>[];
+              final http.Response silosResponse = await http.post(
+                'http://94.130.230.203:8585/operation/getvehicle',
+                headers: {
+                  'authorization': loggedUser.token,
+                },
+                body: {
+                  'all': '1',
+                },
+              );
+              List<dynamic> calledSilosJson = jsonDecode(silosResponse.body);
+              print(calledSilosJson);
+              for (int i = 0; i < calledSilosJson.length; i++) {
+                if (calledSilosJson[i]['status'] == 'آزاد') {
+                  vehiclesList.add(
+                    Vehicle(
+                      name: calledSilosJson[i]['name'],
+                      owner: calledSilosJson[i]['owner'],
+                      status: calledSilosJson[i]['status'],
+                      id: calledSilosJson[i]['_id'],
+                    ),
+                  );
+                }
+              }
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Amaliyat(
+                    vehiclesList: vehiclesList,
                   ),
                 ),
               );

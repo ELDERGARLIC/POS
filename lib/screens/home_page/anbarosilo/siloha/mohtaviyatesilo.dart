@@ -2,22 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:corpapp/utilities/global.dart';
 
-class Kandoo {
-  String name;
-  String id;
-  bool free;
-  String contenttype;
-  String tonnage;
-  String freespace;
-  Kandoo(
-      {this.name,
-      this.contenttype,
-      this.free,
-      this.freespace,
-      this.id,
-      this.tonnage});
-}
-
 class MohtaviyateSiloha extends StatefulWidget {
   MohtaviyateSiloha({this.silos});
   final List<dynamic> silos;
@@ -27,15 +11,15 @@ class MohtaviyateSiloha extends StatefulWidget {
 }
 
 class _MohtaviyateSilohaState extends State<MohtaviyateSiloha> {
-  List<Kandoo> silosList = <Kandoo>[];
-  List<StorageContainer> widgetsList = <StorageContainer>[];
+  List<SiloElements> silosList = <SiloElements>[];
+  List<SiloContainer> widgetsList = <SiloContainer>[];
 
   @override
   void initState() {
     super.initState();
     print(widget.silos.length);
     for (int i = 0; i < widget.silos.length; i++) {
-      silosList.add(Kandoo(
+      silosList.add(SiloElements(
         id: widget.silos[i]['_id'],
         name: widget.silos[i]['name'],
         free: widget.silos[i]['free'],
@@ -45,7 +29,7 @@ class _MohtaviyateSilohaState extends State<MohtaviyateSiloha> {
       ));
     }
     for (int i = 0; i < silosList.length; i++) {
-      widgetsList.add(StorageContainer(
+      widgetsList.add(SiloContainer(
         freespace: silosList[i].freespace,
         icon: 'assets/logos/anbarlist.png',
         contenttype: silosList[i].contenttype,
@@ -131,8 +115,8 @@ class _MohtaviyateSilohaState extends State<MohtaviyateSiloha> {
   }
 }
 
-class StorageContainer extends StatelessWidget {
-  StorageContainer({
+class SiloContainer extends StatelessWidget {
+  SiloContainer({
     @required this.color,
     @required this.contenttype,
     @required this.icon,

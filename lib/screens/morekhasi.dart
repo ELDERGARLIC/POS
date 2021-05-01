@@ -12,7 +12,7 @@ class Morekhasi extends StatefulWidget {
 }
 
 class _MorekhasiState extends State<Morekhasi> {
-  PersianDate persianDate = PersianDate(format: "yyyy/mm/dd  \n DD  , d  MM  ");
+  PersianDate persianDate = PersianDate(format: "yyyy/mm/dd");
   String pickedStartDate = '';
   String pickedEndDate = '';
 
@@ -20,6 +20,7 @@ class _MorekhasiState extends State<Morekhasi> {
     String picked = await jalaliCalendarPicker(
       context: context,
       convertToGregorian: false,
+      selectedFormat: "yyyy/mm/dd",
     );
     if (picked != null) setState(() => pickedStartDate = picked);
   }
@@ -28,6 +29,7 @@ class _MorekhasiState extends State<Morekhasi> {
     String picked = await jalaliCalendarPicker(
       context: context,
       convertToGregorian: false,
+      selectedFormat: "yyyy/mm/dd",
     );
     if (picked != null) setState(() => pickedEndDate = picked);
   }
@@ -47,11 +49,11 @@ class _MorekhasiState extends State<Morekhasi> {
     );
     pickedStartDate = persianDate.gregorianToJalali(
       DateTime.now().toString(),
-      "yyyy-m-d",
+      "yyyy/mm/dd",
     );
     pickedEndDate = persianDate.gregorianToJalali(
       DateTime.now().toString(),
-      "yyyy-m-d",
+      "yyyy/mm/dd",
     );
   }
 
@@ -192,8 +194,8 @@ class _MorekhasiState extends State<Morekhasi> {
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
                                               vertical: 8.0),
-                                          width: 160.0,
-                                          height: 65.0,
+                                          width: 200.0,
+                                          height: 70.0,
                                           child: RaisedButton(
                                             elevation: 5.0,
                                             onPressed: () {
@@ -226,8 +228,8 @@ class _MorekhasiState extends State<Morekhasi> {
                                       Container(
                                         padding:
                                             EdgeInsets.symmetric(vertical: 8.0),
-                                        width: 160.0,
-                                        height: 65.0,
+                                        width: 200.0,
+                                        height: 70.0,
                                         child: RaisedButton(
                                           elevation: 5.0,
                                           onPressed: () {

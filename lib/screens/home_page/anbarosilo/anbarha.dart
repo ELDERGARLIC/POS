@@ -5,12 +5,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:corpapp/utilities/global.dart';
 
-class Anbar {
-  String id;
-  String name;
-  Anbar({this.id, this.name});
-}
-
 class Anbarha extends StatefulWidget {
   final List<dynamic> anbarha;
   Anbarha({this.anbarha});
@@ -20,18 +14,18 @@ class Anbarha extends StatefulWidget {
 }
 
 class _AnbarhaState extends State<Anbarha> {
-  List<SpecialContainer> widgetsList = <SpecialContainer>[];
-  List<Anbar> anbarList = <Anbar>[];
+  List<Anbars> widgetsList = <Anbars>[];
+  List<AnbarClass> anbarList = <AnbarClass>[];
 
   @override
   void initState() {
     super.initState();
     for (int i = 0; i < widget.anbarha.length; i++) {
-      anbarList.add(
-          Anbar(id: widget.anbarha[i]['_id'], name: widget.anbarha[i]['name']));
+      anbarList.add(AnbarClass(
+          id: widget.anbarha[i]['_id'], name: widget.anbarha[i]['name']));
     }
     for (int i = 0; i < anbarList.length; i++) {
-      widgetsList.add(SpecialContainer(
+      widgetsList.add(Anbars(
         onvan: anbarList[i].name,
         toWhere: () async {
           final http.Response anbarResponse = await http.post(
@@ -135,8 +129,8 @@ class _AnbarhaState extends State<Anbarha> {
   }
 }
 
-class SpecialContainer extends StatelessWidget {
-  SpecialContainer({@required this.onvan, @required this.toWhere});
+class Anbars extends StatelessWidget {
+  Anbars({@required this.onvan, @required this.toWhere});
 
   final String onvan;
   final Function toWhere;

@@ -35,6 +35,102 @@ class User {
   });
 }
 
+class AnbarClass {
+  String id;
+  String name;
+  AnbarClass({this.id, this.name});
+}
+
+class AnbarElements {
+  String name;
+  String id;
+  bool free;
+  String contenttype;
+  int length;
+  int width;
+  bool isChecked;
+
+  AnbarElements(
+      {this.name,
+      this.contenttype,
+      this.free,
+      this.width,
+      this.id,
+      this.length});
+}
+
+class SiloClass {
+  String id;
+  String name;
+  String dateK;
+  String dateS;
+  String dateG;
+  String temp;
+  String apiCallDate;
+  String creationDate;
+  SiloClass({
+    this.id,
+    this.name,
+    this.dateK,
+    this.dateS,
+    this.dateG,
+    this.temp,
+    this.apiCallDate,
+    this.creationDate,
+  });
+}
+
+class SiloElements {
+  String name;
+  String id;
+  bool free;
+  String contenttype;
+  String tonnage;
+  String freespace;
+  bool isChecked;
+  SiloElements(
+      {this.name,
+      this.contenttype,
+      this.free,
+      this.freespace,
+      this.id,
+      this.tonnage});
+}
+
+class MohavateClass {
+  String id;
+  String name;
+  MohavateClass({this.id, this.name});
+}
+
+class MohavateElement {
+  String id;
+  String name;
+  bool free;
+  String contenttype;
+  String tonnage;
+  String temp;
+  String freespace;
+  bool isChecked;
+  MohavateElement({
+    this.id,
+    this.name,
+    this.free,
+    this.contenttype,
+    this.tonnage,
+    this.temp,
+    this.freespace,
+  });
+}
+
+class Vehicle {
+  String name;
+  String owner;
+  String status;
+  String id;
+  Vehicle({this.name, this.owner, this.status, this.id});
+}
+
 // FUNCTIONS
 void logOutFunction(BuildContext context) async {
   {

@@ -3,13 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:corpapp/utilities/global.dart';
 
-class Vehicle {
-  String name;
-  String owner;
-  String status;
-  Vehicle({this.name, this.owner, this.status});
-}
-
 class Tajhizati extends StatefulWidget {
   final List<dynamic> tajhizat;
   Tajhizati({this.tajhizat});
@@ -29,6 +22,7 @@ class _TajhizatiState extends State<Tajhizati> {
         name: widget.tajhizat[i]['name'],
         owner: widget.tajhizat[i]['owner'],
         status: widget.tajhizat[i]['status'],
+        id: widget.tajhizat[i]['_id'],
       ));
     }
     for (int i = 0; i < silosList.length; i++) {
