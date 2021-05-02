@@ -1,6 +1,6 @@
-# corpapp
+# POS
 
-A new Flutter project.
+Part of EasySeaPort Project.
 
 ## Getting Started
 
